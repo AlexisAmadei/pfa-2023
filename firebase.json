@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": "build",
+    "site": "pfa2023",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
