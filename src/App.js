@@ -11,6 +11,9 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
+      <div className="overlay">
+        <p>Please resize your browser window to view the application.</p>
+      </div>
       <div className="app-container">
         <Routes>
           <Route path='/' element={<Landing />} />
