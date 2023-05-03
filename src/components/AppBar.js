@@ -11,13 +11,20 @@ import CREDIT_CARD from "../assets/creditCard.svg";
 export default function AppBar() {
   return (
     <div className="navbar-container">
-      <ol className="menu-list">
-        <li className="menu-item"><img src={PIN} alt="Pin" />Stations</li>
-        <li className="menu-item"><img src={MAP} alt="Map" />Itinéraires</li>
-        <li className="menu-item"><img src={BOLT} alt="Charge" />Charge</li>
-        <li className="menu-item"><img src={CREDIT_CARD} alt="Credit Card" />Ma Carte</li>
-        <li className="menu-item"><img src={ACCOUNT} alt="Account" />Compte</li>
-      </ol>
+      <div className="menu">
+        <span className="menu-item"><img src={PIN} alt="Pin" />Stations</span>
+        <span className="menu-item"><img src={MAP} alt="Map" />Itinéraires</span>
+        <span className="menu-item"><img src={BOLT} alt="Charge" />Charge</span>
+        <span className="menu-item"><img src={CREDIT_CARD} alt="Credit Card" />Ma Carte</span>
+        <span className="menu-item"><img src={ACCOUNT} alt="Account" />Compte</span>
+      </div>
+      <div className="menu-xs">
+        <span className="menu-item"><img src={PIN} alt="Pin" /></span>
+        <span className="menu-item"><img src={MAP} alt="Map" /></span>
+        <span className="menu-item"><img src={BOLT} alt="Charge" /></span>
+        <span className="menu-item"><img src={CREDIT_CARD} alt="Credit Card" /></span>
+        <span className="menu-item"><img src={ACCOUNT} alt="Account" /></span>
+      </div>
     </div>
   )
 }
