@@ -3,7 +3,8 @@
     left: 0;
     bottom: 0;
     max-height: 95px;
-
+    z-index: 99;
+    background-color: white;
 }
 
 .menu {
@@ -38,7 +39,7 @@
     }
 }
 
- @media screen and (min-width: 300px) {
+@media screen and (min-width: 300px) {
     .menu-xs {
         display: none;
     }
