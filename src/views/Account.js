@@ -11,6 +11,8 @@ const userUID = "yiRokmNDgGAc4czw1sIQ";
 export default function Account() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [car, setCar] = useState("");
+  const [cardID, setCardID] = useState("");
 
   useEffect(() => {
     const getUserData = async () => {
@@ -19,6 +21,7 @@ export default function Account() {
       if(userSnap.exists()) {
         setFirstName(userSnap.data().firstName);
         setLastName(userSnap.data().lastName);
+        setCar(userSnap.data().car);
       } else console.error("No such document!");
     };
     getUserData();
@@ -40,6 +43,7 @@ export default function Account() {
         </div>
       </div>
       <div className="cars-list">
+        <span id="profile-text">{car}</span>
       </div>
       <div className="menu-list">
       </div>

@@ -36,13 +36,13 @@
     margin-top: 8px;
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 299px) {
     .menu {
         display: none;
     }
 }
 
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 299px) {
     .menu-xs {
         display: none;
     }
