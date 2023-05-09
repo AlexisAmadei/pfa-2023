@@ -5,6 +5,7 @@ import { db } from "../config/configFirebase";
 import { doc, getDoc } from "firebase/firestore";
 
 import EngieAppBar from "../components/EngieAppBar";
+import CarList from "../components/CarList";
 
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
@@ -44,8 +45,16 @@ export default function Account() {
       </div>
       <div className="cars-list">
         <span id="profile-text">{car}</span>
+        <CarList />
       </div>
       <div className="menu-list">
+        <ul>
+          <li>Informations personnelles</li>
+          <li>Itinéraire enregistrés</li>
+          <li>Charges enregistrées</li>
+          <li>Historique des paiements</li>
+          <li>Confidentialité et sécurité</li>
+        </ul>
       </div>
       <EngieAppBar />
     </div>
