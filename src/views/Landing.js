@@ -1,11 +1,9 @@
 import React from "react";
 
 import OSP from "../components/OSMapIntegration";
-import AppBar from "../components/AppBar";
+import EngieAppBar from "../components/EngieAppBar";
 
 import "../css/Landing.css"
-import SwipeableEdgeDrawer from "../components/SwipeableDrawer";
-import ResizableSearchInput from "../components/ResizableSearchInput";
 
 export default function Landing() {
   return (
@@ -15,7 +13,7 @@ export default function Landing() {
       </div>
       <div className="landing-footer">
         {/* <ResizableSearchInput /> */}
-        <AppBar />
+        <EngieAppBar />
       </div>
     </div>
   );

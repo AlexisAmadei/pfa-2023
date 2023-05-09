@@ -1,20 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
-import '@engie-group/fluid-design-tokens/lib/css/tokens.css';
-import '@engie-group/fluid-design-system/lib/base.css';
-import { NJButton } from '@engie-group/fluid-design-system-react';
+import { db } from "../config/configFirebase";
+import { doc, getDoc } from "firebase/firestore";
+
+import EngieAppBar from "../components/EngieAppBar";
+
+const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Account() {
-    return (
-        <div>
-            <NJButton
-                className="nj-button"
-                size="large"
-                variant="contained"
-                title="Button"
-                label="Button"
-            />
-            <h1>Account</h1>
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const userRef = doc(db, "users", userUID);
+      const userSnap = await getDoc(userRef);
+      if(userSnap.exists()) {
+        setFirstName(userSnap.data().firstName);
+        setLastName(userSnap.data().lastName);
+      } else console.error("No such document!");
+    };
+    getUserData();
+  }, [
+    firstName,
+    lastName,
+  ]);
+
+  return (
+    <div className="main-account-container">
+      <div className="preview">
+        <div className="profile-picture">
+          <img height={70} src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" className="avatar"
+            style={{ borderRadius: "50%" }}
+          />
         </div>
-    );
+        <div className="profile-info">
+          <span id="profile-text">{firstName} {lastName}</span>
+        </div>
+      </div>
+      <div className="cars-list">
+      </div>
+      <div className="menu-list">
+      </div>
+      <EngieAppBar />
+    </div>
+  );
 }

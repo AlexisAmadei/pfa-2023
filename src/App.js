@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import "firebase/firestore";
+
 import Landing from './views/Landing';
 import Itinerary from './views/Itinerary';
 import Charge from './views/Charge';
