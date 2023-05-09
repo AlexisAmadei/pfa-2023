@@ -3,10 +3,10 @@ import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 const MapComponent = () => {
-  const position = [51.505, -0.09]; // You can set this to your desired latitude and longitude
+  const position = [51.505, -0.09]; // latitude and longitude
   let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-  vh = vh - 96; // app bar height
+  vh = vh - 150; // app bar height
   return (
     <MapContainer center={position} zoom={13} style={{ width: '100vw', height: `${vh}px` }}>
       <TileLayer
