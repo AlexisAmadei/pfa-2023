@@ -4,8 +4,8 @@ import { getDoc, doc } from "firebase/firestore";
 import { db } from "../config/configFirebase";
 
 import Modal from "../components/Modal";
-import "../css/CarList.css";
 import EditIcon from "../assets/edit.svg";
+import "../css/CarList.css";
 
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
@@ -27,8 +27,6 @@ export default function CarList() {
       if (docSnap.exists()) {
         setCarPerso(docSnap.data().carPerso);
         setCarPro(docSnap.data().carPro);
-        console.log("Car perso:", docSnap.data().carPerso);
-        console.log("Car pro:", docSnap.data().carPro);
       } else console.error("No such document!");
     };
     getProfileData();

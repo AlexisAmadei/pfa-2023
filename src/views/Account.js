@@ -13,7 +13,6 @@ export default function Account() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [car, setCar] = useState("");
-  const [cardID, setCardID] = useState("");
 
   useEffect(() => {
     const getUserData = async () => {
