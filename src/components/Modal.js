@@ -46,6 +46,7 @@ export default function BasicModal() {
       }
     } else console.error("User not found");
     handleClose();
+    window.location.reload();
   }
 
   useEffect(() => {

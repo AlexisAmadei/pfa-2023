@@ -41,20 +41,22 @@ export default function CarList() {
         const carPersoSnap = await getDoc(carPersoRef);
         if (carPersoSnap.exists()) {
           setCarPersoImg(carPersoSnap.data().img);
+          setCarPersoPower(carPersoSnap.data().power);
+          setCarPersoAuto(carPersoSnap.data().autonomy);
         } else console.error("No carPerso document!");
       }
-
       if (carPro) {
         const carProRef = doc(db, "cars", carPro);
         const carProSnap = await getDoc(carProRef);
         if (carProSnap.exists()) {
+          setCarProPower(carProSnap.data().power);
+          setCarProAuto(carProSnap.data().autonomy);
           setCarProImg(carProSnap.data().img);
         } else console.error("No carPro document!");
       }
     };
     fetchCarData();
-    console.log("Car perso img:", carPersoImg);
-  }, []);
+  }, [carPerso, carPro]);
 
   return (
     <>
