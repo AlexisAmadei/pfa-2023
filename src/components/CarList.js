@@ -59,7 +59,7 @@ export default function CarList() {
   }, [carPerso, carPro]);
 
   return (
-    <>
+    <div>
       <div className="car-preview-container">
         {carPerso && (
           <div className="car-item">
@@ -68,6 +68,7 @@ export default function CarList() {
             <span id="carNAME">{carPerso}</span>
             <span id="carAUTONOMY">{carPersoAuto}km</span>
             <span id="carPOWER">{carPersoPower}kw</span>
+            <span id="car-label">Perso</span>
           </div>
         )}
         {carPro && (
@@ -77,12 +78,13 @@ export default function CarList() {
             <span id="carNAME">{carPro}</span>
             <span id="carAUTONOMY">{carProAuto}km</span>
             <span id="carPOWER">{carProPower}kw</span>
+            <span id="car-label">Pro</span>
           </div>
         )}
       </div >
       <div className="add-car-container">
         <Modal />
       </div>
-    </>
+    </div>
   );
 };

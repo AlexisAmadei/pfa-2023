@@ -23,3 +23,9 @@
     top: 0;
     right: 0;
 }
+
+#car-label {
+    background: #AFCBDF;
+    border-radius: 16px;
+    padding: 0px 16px;
+}
