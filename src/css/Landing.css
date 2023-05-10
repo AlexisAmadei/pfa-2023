@@ -1,9 +1,21 @@
 .map-container {
-    height: 100vh - 95px;
+    flex: 1;
+    position: relative;
 }
 
 .landing-container {
-    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.landing-footer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .swipeable-drawer-container {

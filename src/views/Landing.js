@@ -8,12 +8,11 @@ import "../css/Landing.css"
 export default function Landing() {
   return (
     <div className="landing-container">
+      <div className="landing-footer">
+        <EngieAppBar />
+      </div>
       <div className="map-container">
         <OSP />
-      </div>
-      <div className="landing-footer">
-        {/* <ResizableSearchInput /> */}
-        <EngieAppBar />
       </div>
     </div>
   );
