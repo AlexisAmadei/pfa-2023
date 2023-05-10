@@ -25,28 +25,31 @@ const style = {
 export default function Card() {
   const [open, setOpen] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
+  const [cardNumberError, setCardNumberError] = useState(false);
+  const [cardNumberHelperText, setCardNumberHelperText] = useState("");
+  const [inputCardNumber, setInputCardNumber] = useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleValidate = async () => {
-    const userRef = doc(db, "users", userUID);
-    const userSnap = await getDoc(userRef);
+    if (!cardNumberError) {
+      const userRef = doc(db, "users", userUID);
+      const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      await updateDoc(userRef, {
-        cardNumber: cardNumber
-      });
-    } else console.error("User not found");
-    handleClose();
+      if (userSnap.exists()) {
+        await updateDoc(userRef, {
+          cardNumber: inputCardNumber
+        });
+        setCardNumber(inputCardNumber);
+      } else console.error("User not found");
+      handleClose();
+    }
   };
-
-  const [cardNumberError, setCardNumberError] = useState(false);
-  const [cardNumberHelperText, setCardNumberHelperText] = useState("");
 
   const handleCardNumberChange = (e) => {
     const value = e.target.value;
-    setCardNumber(value);
+    setInputCardNumber(value);
 
     if (value.length > 10 || value.length < 10) {
       setCardNumberError(true);
@@ -57,25 +60,36 @@ export default function Card() {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchCardNumber = async () => {
-  //     const userRef = doc(db, "users", userUID);
-  //     const userSnap = await getDoc(userRef);
+  const fetchCardNumber = async () => {
+    const userRef = doc(db, "users", userUID);
+    const userSnap = await getDoc(userRef);
 
-  //     if (userSnap.exists()) {
-  //       setCardNumber(userSnap.data().cardNumber);
-  //     } else console.error("User not found");
-  //   };
-  //   fetchCardNumber();
-  // }, []);
+    if (userSnap.exists()) {
+      setCardNumber(userSnap.data().cardNumber);
+    } else console.error("User not found");
+    return
+  };
+
+  useEffect(() => {
+    fetchCardNumber();
+  }, []);
 
   return (
     <div>
+      {cardNumber === "" ? (
+        <>
+          <p>Vous n'avez pas encore de carte RFID</p>
+          <Button onClick={handleOpen}>Ajouter une carte RFID</Button>
+        </>
+      ) : (
+        <>
+          <p>Vous avez déjà une carte RFID</p>
+          <Button onClick={handleOpen}>Editer la carte</Button>
+        </>
+      )}
       <div>
-        <h1>Current Card</h1>
-        <p>Card number: {cardNumber}</p>
+        <p>Current card number: {cardNumber}</p>
       </div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -83,7 +97,8 @@ export default function Card() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TextField
+        <TextField
+            value={inputCardNumber}
             onChange={handleCardNumberChange}
             id="outlined-number"
             label="Number"
