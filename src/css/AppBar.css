@@ -17,6 +17,13 @@
     font-size: 12px;
     margin-bottom: 8px;
     margin-top: 8px;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #778C9B;
 }
 
 .menu-item {
