@@ -61,8 +61,8 @@ export default function CarList() {
       <div className="car-preview-container">
         {carPerso && (
           <div className="car-item">
-            <img id="EditIcon" src={EditIcon} />
-            <img id="carIMG" height={20} src={carPersoImg} />
+            <image id="EditIcon" src={EditIcon} alt="icon" />
+            <image id="carIMG" height={20} src={carPersoImg} alt="car image" />
             <span id="carNAME">{carPerso}</span>
             <span id="carAUTONOMY">{carPersoAuto}km</span>
             <span id="carPOWER">{carPersoPower}kw</span>
@@ -71,8 +71,8 @@ export default function CarList() {
         )}
         {carPro && (
           <div className="car-item">
-            <img id="EditIcon" src={EditIcon} />
-            <img id="carIMG" height={100} src={carProImg} />
+            <image id="EditIcon" src={EditIcon} alt="icon"/>
+            <image id="carIMG" height={100} src={carProImg} alt="car image" />
             <span id="carNAME">{carPro}</span>
             <span id="carAUTONOMY">{carProAuto}km</span>
             <span id="carPOWER">{carProPower}kw</span>
