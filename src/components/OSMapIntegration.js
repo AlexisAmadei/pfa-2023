@@ -18,9 +18,7 @@ const customIcon = L.icon({
 const CenterControl = ({ position }) => {
   const map = useMap();
 
-  const centerView = () => {
-    map.flyTo(position, map.getZoom());
-  };
+  const centerView = () => { map.flyTo(position, map.getZoom()); };
 
   return (
     <IconButton
@@ -41,7 +39,7 @@ const CenterControl = ({ position }) => {
 };
 
 const MapComponent = () => {
-  const [position, setPosition] = useState([0, 0]);
+  const [position, setPosition] = useState([48.9, 2.45]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
@@ -52,22 +50,14 @@ const MapComponent = () => {
               const { latitude, longitude } = position.coords;
               resolve([latitude, longitude]);
             },
-            (error) => {
-              reject(error);
-            }
+            (error) => { reject(error); }
           );
-        } else {
-          reject(new Error("error"));
-        }
+        } else { reject(new Error("error")); }
       });
     };
     getCurrentLocation()
-      .then((coords) => {
-        setPosition(coords);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      .then((coords) => { setPosition(coords); })
+      .catch((error) => { console.error(error); });
   }, []);
 
   return (

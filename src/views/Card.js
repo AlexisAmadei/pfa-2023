@@ -117,7 +117,7 @@ export default function Card() {
           <Button onClick={handleValidate}>Valider</Button>
         </Box>
       </Modal>
-      <EngieAppBar />
+      <EngieAppBar active='card' />
     </div>
   );
 }

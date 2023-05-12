@@ -5,6 +5,7 @@ const containerStyle = {
   width: '272px',
   height: 'min-content',
   borderRadius: '10px',
+  alignSelf: 'center',
 };
 
 const qrReaderStyle = {
@@ -26,7 +27,7 @@ export default function QRreader(props) {
         style={qrReaderStyle}
         legacyMode
       />
-      <p>{data}</p>
+      {/* <p>{data}</p> */}
     </div>
   );
 }

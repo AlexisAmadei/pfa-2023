@@ -55,7 +55,7 @@ export default function Account() {
           <li>Confidentialité et sécurité</li>
         </ul>
       </div>
-      <EngieAppBar />
+      <EngieAppBar active='account' />
     </div>
   );
 }
