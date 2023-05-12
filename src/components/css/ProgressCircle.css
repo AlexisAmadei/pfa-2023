@@ -9,3 +9,13 @@
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
+.circle-text {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 34px;
+    text-align: center;
+    color: #171D21
+}
