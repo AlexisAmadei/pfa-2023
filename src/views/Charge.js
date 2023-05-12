@@ -8,6 +8,7 @@ import chargeIcon from "../assets/chargeIcon.svg";
 
 import '@engie-group/fluid-design-tokens/lib/css/tokens.css';
 import '@engie-group/fluid-design-system/lib/base.css';
+
 import { NJInputSearch } from '@engie-group/fluid-design-system-react';
 
 import Checkbox from '@mui/material/Checkbox';

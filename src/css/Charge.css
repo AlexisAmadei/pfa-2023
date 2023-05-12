@@ -33,12 +33,12 @@
     align-items: center;
     height: 100vh;
     gap: 35px;
+    box-sizing: border-box;
 }
 
 .suggest-charge-container {
     width: 100%;
     text-align: left;
-    gap: 0px;
 }
 
 .suggest-charge {
