@@ -1,32 +1,56 @@
 import React from 'react';
 
-const ProgressCircle = ({ progress }) => {
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashOffset = circumference - progress / 100 * circumference;
+import './css/ProgressCircle.css';
+
+const ProgressCircle = (props) => {
+  const { percentage, circleWidth, max } = props;
+  const radius = 85;
+  const dashArray = radius * Math.PI * 2;
+  const dashOffset = dashArray - (dashArray * percentage) / 100;
+  const backDashOffset = dashArray - (dashArray * max) / 100;
 
   return (
-    <svg width="120" height="120">
-      <circle
-        stroke="lightgray"
-        fill="transparent"
-        r={radius}
-        cx="60"
-        cy="60"
-        strokeWidth="10"
-      />
-      <circle
-        stroke="blue"
-        fill="transparent"
-        r={radius}
-        cx="60"
-        cy="60"
-        strokeWidth="10"
-        strokeDasharray={circumference}
-        strokeDashoffset={strokeDashOffset}
-        style={{transform: 'rotate(-90deg)', transformOrigin: 'center'}}
-      />
-    </svg>
+    <div>
+      <svg
+        width={circleWidth}
+        height={circleWidth}
+        viewBox={`0 0 ${circleWidth} ${circleWidth}`}
+      >
+        {/* <circle
+          className='circle-background'
+          cx={circleWidth / 2}
+          cy={circleWidth / 2}
+          strokeWidth={"15px"}
+          r={radius}
+          style={{
+            strokeDasharray: dashArray,
+            strokeDashoffset: backDashOffset,
+          }}
+        /> */}
+
+        <circle
+          className='circle-progress'
+          cx={circleWidth / 2}
+          cy={circleWidth / 2}
+          strokeWidth={"15px"}
+          r={radius}
+          style={{
+            strokeDasharray: dashArray,
+            strokeDashoffset: dashOffset,
+          }}
+          transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
+        />
+        <text
+          className='circle-text'
+          x='50%'
+          y='50%'
+          dy='.3em'
+          textAnchor='middle'
+        >
+          {`${percentage}%`}
+        </text>
+      </svg>
+    </div>
   );
 };
 

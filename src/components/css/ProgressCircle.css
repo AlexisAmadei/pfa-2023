@@ -1,0 +1,11 @@
+.circle-background {
+    fill: none;
+    stroke: gainsboro;
+}
+
+.circle-progress {
+    fill: none;
+    stroke: #007ACD;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
