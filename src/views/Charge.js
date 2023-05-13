@@ -23,17 +23,22 @@ export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false);
 
-  const [haveBorneID, setHaveBorneID] = useState(false);
+  const [haveBorneID, setHaveBorneID] = useState(true); // true pour dev
   const [borneID, setBorneID] = useState("");
-  const [bornePower, setBornePower] = useState(0);
+  const [bornePower, setBornePower] = useState(50);
   const [getQR, setGetQR] = useState('');
 
   const [carBattery, setCarBattery] = useState(0);
+  const [carMaxCapacity, setCarMaxCapacity] = useState(0);
+  const [carMaxAutonomy, setCarMaxAutonomy] = useState(0);
+  const [carCurrentCapacity, setCurrentCarCapacity] = useState(0);
   const [wantedCharge, setWantedCharge] = useState(carBattery || 0);
+  const [delta, setDelta] = useState(0);
 
   const [timeToCharge, setTimeToCharge] = useState(0);
   const [costToCharge, setCostToCharge] = useState(0);
   const [autonomy, setAutonomy] = useState(0);
+  const [newAutonomy, setNewAutonomy] = useState(0);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -41,17 +46,14 @@ export default function Charge() {
   const handleSlider = (e) => {
     setWantedCharge(e.target.value);
   };
-  const getBornePower = async() => {
-    // console.log(borneID);
+  const getBornePower = async () => {
     const docRef = doc(db, "bornes", borneID);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setBornePower(docSnap.data().power);
-      // console.log(bornePower);
     }
   };
-
- const handleBorneID = async (e) => {
+  const handleBorneID = async (e) => {
     const docRef = doc(db, "bornes", e);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -64,32 +66,40 @@ export default function Charge() {
     }
   };
 
-  function getDeltaCharge() {
-    let deltaCharge = wantedCharge - carBattery;
-    return deltaCharge;
-  };
+  function getNewAutonomy() { setNewAutonomy(((wantedCharge / 100) * carMaxAutonomy).toFixed(0)); }
 
-  useEffect(() => {
-    function getInfoToCharge() {
-      setTimeToCharge((100 * (100 - carBattery)) / bornePower);
-      setCostToCharge((100 * (100 - carBattery)) * 0.55);
-    };
+  useEffect(() => { // get all infos on render then shouldn't update
     const getCarInfo = async () => {
-      const carInfoRef = doc(db, "users", userUID);
-      const carInfoSnap = await getDoc(carInfoRef);
-      if (carInfoSnap.exists()) {
-        const batteryValue = carInfoSnap.data().carPerso.battery;
+      const carUserRef = doc(db, "users", userUID);
+      const carUserSnap = await getDoc(carUserRef);
+      let batteryValue = null;
+      let carRef = null;
+      let carSnap = null;
+
+      if (carUserSnap.exists()) {
+        batteryValue = carUserSnap.data().carPro.battery;
         setCarBattery(batteryValue);
         setWantedCharge(batteryValue);
+        carRef = doc(db, "cars", carUserSnap.data().carPro.name);
+        carSnap = await getDoc(carRef);
+        if (carSnap.exists()) {
+          setCarMaxCapacity(carSnap.data().capacity);
+          setCarMaxAutonomy(carSnap.data().autonomy);
+          const autonomy = ((carBattery / 100) * carSnap.data().autonomy).toFixed(0);
+          setAutonomy(autonomy);
+        }
       }
     };
-    getInfoToCharge();
     getCarInfo();
-  }, []);
+  }, [autonomy]);
 
   useEffect(() => {
     if (getQR !== '') { handleBorneID(getQR); }
   }, [getQR]);
+
+  useEffect(() => {
+    getNewAutonomy()
+  }, [wantedCharge, carMaxAutonomy]);
 
   if (!haveBorneID) {
     return (
@@ -152,19 +162,19 @@ export default function Charge() {
         <div className="preview-stats">
           <div className="preview-stats-item">
             <p>Temps</p>
-            <p id="stats-value">1h 30</p>
+            <p id="stats-value">{timeToCharge}h</p>
           </div>
           <div className="preview-stats-item">
             <p>Coût de charge</p>
-            <p id="stats-value">2,50€</p>
+            <p id="stats-value">{costToCharge}€</p>
           </div>
           <div className="preview-stats-item">
             <p>Autonomie</p>
-            <p id="stats-value">~ 300km</p>
+            <p id="stats-value">~ {newAutonomy}km</p>
           </div>
         </div>
-        <p>delta charge: {getDeltaCharge()}</p>
-        {getDeltaCharge() > 0 ?
+        <p>delta charge: {delta}</p>
+        {delta > 0 ?
           <div className="start-charge">
             <button id="ready" onClick={() => setHaveSettings(true)}>Lancez la recharge</button>
           </div> :
