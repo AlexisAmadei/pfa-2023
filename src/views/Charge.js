@@ -21,9 +21,9 @@ const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Charge() {
   const [checked, setChecked] = useState(false);
-  const [haveSettings, setHaveSettings] = useState(false);
+  const [haveSettings, setHaveSettings] = useState(false); // true skip second view state
 
-  const [haveBorneID, setHaveBorneID] = useState(true); // true pour dev
+  const [haveBorneID, setHaveBorneID] = useState(true); // true skip first view state
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(50);
   const [getQR, setGetQR] = useState('');
@@ -68,6 +68,23 @@ export default function Charge() {
 
   function getNewAutonomy() { setNewAutonomy(((wantedCharge / 100) * carMaxAutonomy).toFixed(0)); }
 
+  function getNewCost() {
+    const deltaKWH = ((wantedCharge - carBattery) / 100) * carMaxCapacity;
+    setDelta(deltaKWH);
+    setCostToCharge((deltaKWH * 0.55).toFixed(2));
+  }
+  function getNewTime() {
+    let timeFormat = null;
+    const time = (delta / bornePower) * 60;
+    if (time < 60) {
+      timeFormat = `${time.toFixed(0)} min`;
+    }
+    else {
+      timeFormat = `${(time / 60).toFixed(0)} h ${(time % 60).toFixed(0)} min`;
+    }
+    setTimeToCharge(timeFormat);
+  }
+
   useEffect(() => { // get all infos on render then shouldn't update
     const getCarInfo = async () => {
       const carUserRef = doc(db, "users", userUID);
@@ -99,6 +116,8 @@ export default function Charge() {
 
   useEffect(() => {
     getNewAutonomy()
+    getNewCost();
+    getNewTime();
   }, [wantedCharge, carMaxAutonomy]);
 
   if (!haveBorneID) {
@@ -162,7 +181,7 @@ export default function Charge() {
         <div className="preview-stats">
           <div className="preview-stats-item">
             <p>Temps</p>
-            <p id="stats-value">{timeToCharge}h</p>
+            <p id="stats-value">{timeToCharge}</p>
           </div>
           <div className="preview-stats-item">
             <p>Coût de charge</p>
