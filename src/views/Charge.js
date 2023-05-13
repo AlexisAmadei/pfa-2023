@@ -23,13 +23,16 @@ export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false);
 
-  const [haveBorneID, setHaveBorneID] = useState(true);
-  const [borneID, setBorneID] = useState('');
+  const [haveBorneID, setHaveBorneID] = useState(false);
+  const [borneID, setBorneID] = useState("");
+  const [bornePower, setBornePower] = useState(0);
 
   const [carBattery, setCarBattery] = useState(0);
   const [wantedCharge, setWantedCharge] = useState(carBattery || 0);
 
-  const maxChargeWanted = 55;
+  const [timeToCharge, setTimeToCharge] = useState(0);
+  const [costToCharge, setCostToCharge] = useState(0);
+  const [autonomy, setAutonomy] = useState(0);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -37,12 +40,32 @@ export default function Charge() {
   const handleSlider = (e) => {
     setWantedCharge(e.target.value);
   };
+  const getBornePower = async() => {
+    console.log(borneID);
+    const docRef = doc(db, "bornes", borneID);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setBornePower(docSnap.data().power);
+      console.log(bornePower);
+    }
+  };
   const handleBorneID = (e) => {
     setHaveBorneID(true);
     setBorneID(e);
+    getBornePower();
   };
 
+  function getDeltaCharge() {
+    let deltaCharge = wantedCharge - carBattery;
+    return deltaCharge;
+  };
+
+
   useEffect(() => {
+    function getInfoToCharge() {
+      setTimeToCharge((100 * (100 - carBattery)) / bornePower);
+      setCostToCharge((100 * (100 - carBattery)) * 0.55);
+    };
     const getCarInfo = async () => {
       const carInfoRef = doc(db, "users", userUID);
       const carInfoSnap = await getDoc(carInfoRef);
@@ -52,6 +75,7 @@ export default function Charge() {
         setWantedCharge(batteryValue);
       }
     };
+    getInfoToCharge();
     getCarInfo();
   }, []);
 
@@ -84,8 +108,15 @@ export default function Charge() {
         <div className="suggest-charge-container">
           <p style={{ marginBottom: '8px' }}>Charge recommandée pour l'itinéraire</p>
           <div className="suggest-charge">
-            <img src={chargeIcon} />
-            <p>26 min de charge</p>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              <img src={chargeIcon} />
+              <p>26 min de charge</p>
+            </div>
             <Checkbox
               id="checkbox"
               checked={checked}
@@ -106,9 +137,29 @@ export default function Charge() {
             current={carBattery}
           />
         </div>
-        <div className="start-charge">
-          <button onClick={() => setHaveSettings(true)}>Commencer la charge</button>
+        <div className="preview-stats">
+          <div className="preview-stats-item">
+            <p>Temps</p>
+            <p id="stats-value">1h 30</p>
+          </div>
+          <div className="preview-stats-item">
+            <p>Coût de charge</p>
+            <p id="stats-value">2,50€</p>
+          </div>
+          <div className="preview-stats-item">
+            <p>Autonomie</p>
+            <p id="stats-value">~ 300km</p>
+          </div>
         </div>
+        <p>delta charge: {getDeltaCharge()}</p>
+        {getDeltaCharge() > 0 ?
+          <div className="start-charge">
+            <button id="ready" onClick={() => setHaveSettings(true)}>Lancez la recharge</button>
+          </div> :
+          <div className="start-charge">
+            <button id="not-ready">Lancez la recharge</button>
+          </div>
+        }
         <EngieAppBar active='charge' />
       </div>
     );

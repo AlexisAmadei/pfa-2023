@@ -1,3 +1,8 @@
+p {
+    margin: 0;
+    padding: 0;
+}
+
 .charge-header {
     width: 100%;
     text-align: center;
@@ -76,7 +81,7 @@
     max-height: 55px;
 }
 
-.start-charge button {
+.start-charge #not-ready {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -93,4 +98,41 @@
     font-size: 18px;
     line-height: 28px;
     color: #FFFFFF;
+}
+
+.start-charge #ready {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    gap: 8px;
+    background: #007ACD;
+    border: none;
+    width: 100%;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+
+.preview-stats {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.preview-stats #stats-value {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    color: #007ACD;
 }
