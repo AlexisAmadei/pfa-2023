@@ -108,7 +108,7 @@ export default function Charge() {
       }
     };
     getCarInfo();
-  }, [autonomy]);
+  }, [autonomy, carBattery]);
 
   useEffect(() => {
     if (getQR !== '') { handleBorneID(getQR); }
@@ -155,7 +155,7 @@ export default function Charge() {
               alignItems: 'center',
               gap: '8px',
             }}>
-              <img src={chargeIcon} />
+              <img src={chargeIcon} alt="chargeIcon" />
               <p>26 min de charge</p>
             </div>
             <Checkbox
@@ -192,7 +192,7 @@ export default function Charge() {
             <p id="stats-value">~ {newAutonomy}km</p>
           </div>
         </div>
-        <p>delta charge: {delta}</p>
+        <br></br>
         {delta > 0 ?
           <div className="start-charge">
             <button id="ready" onClick={() => setHaveSettings(true)}>Lancez la recharge</button>
