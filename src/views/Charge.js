@@ -26,6 +26,7 @@ export default function Charge() {
   const [haveBorneID, setHaveBorneID] = useState(false);
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(0);
+  const [getQR, setGetQR] = useState('');
 
   const [carBattery, setCarBattery] = useState(0);
   const [wantedCharge, setWantedCharge] = useState(carBattery || 0);
@@ -41,25 +42,32 @@ export default function Charge() {
     setWantedCharge(e.target.value);
   };
   const getBornePower = async() => {
-    console.log(borneID);
+    // console.log(borneID);
     const docRef = doc(db, "bornes", borneID);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setBornePower(docSnap.data().power);
-      console.log(bornePower);
+      // console.log(bornePower);
     }
   };
-  const handleBorneID = (e) => {
-    setHaveBorneID(true);
-    setBorneID(e);
-    getBornePower();
+
+ const handleBorneID = async (e) => {
+    const docRef = doc(db, "bornes", e);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setHaveBorneID(true);
+      setBorneID(e);
+      getBornePower();
+    } else {
+      alert("Cette borne n'existe pas");
+      console.error("Qr code invalide");
+    }
   };
 
   function getDeltaCharge() {
     let deltaCharge = wantedCharge - carBattery;
     return deltaCharge;
   };
-
 
   useEffect(() => {
     function getInfoToCharge() {
@@ -79,6 +87,10 @@ export default function Charge() {
     getCarInfo();
   }, []);
 
+  useEffect(() => {
+    if (getQR !== '') { handleBorneID(getQR); }
+  }, [getQR]);
+
   if (!haveBorneID) {
     return (
       <div className="first-view">
@@ -86,7 +98,7 @@ export default function Charge() {
           <p><span>Se connecter</span> à la borne</p>
         </div>
         <div className="qr-reader">
-          <QRreader />
+          <QRreader getReturnValue={(getQR) => setGetQR(getQR)} />
         </div>
         <div>
           <p id="mid-page">ou</p>

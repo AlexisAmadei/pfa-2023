@@ -13,21 +13,23 @@ const qrReaderStyle = {
   height: '272px',
 };
 
-export default function QRreader(props) {
+export default function QRreader({ getReturnValue }) {
   const [data, setData] = useState('No result');
 
   return (
     <div style={containerStyle}>
       <QrReader
         onResult={(result, error) => {
-          if (result) setData(result.text);
+          if (result) {
+            setData(result.text);
+            getReturnValue(result.text);
+          }
           if (error) console.info(error);
         }}
         constraints={{ facingMode: 'environment' }}
         style={qrReaderStyle}
         legacyMode
       />
-      {/* <p>{data}</p> */}
     </div>
   );
 }
