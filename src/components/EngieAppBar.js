@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import "../css/AppBar.css";
+import "./css/AppBar.css";
 
 import ACTIVE_ACCOUNT from "../assets/EngieAppBar/active/account.svg";
 import ACTIVE_MAP from "../assets/EngieAppBar/active/map.svg";
