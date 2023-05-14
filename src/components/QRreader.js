@@ -16,6 +16,9 @@ const qrReaderStyle = {
 export default function QRreader({ getReturnValue }) {
   const [data, setData] = useState('No result');
 
+  const storeBorneID = (borneID) => {
+    localStorage.setItem('borneID', borneID);
+  };
   return (
     <div style={containerStyle}>
       <QrReader
@@ -23,6 +26,7 @@ export default function QRreader({ getReturnValue }) {
           if (result) {
             setData(result.text);
             getReturnValue(result.text);
+            storeBorneID(result.text);
           }
           if (error) console.info(error);
         }}

@@ -1,0 +1,80 @@
+.header-card {
+    width: 100vw;
+    background: linear-gradient(180deg, #FEFAFA 0%, #E9E9E9 100%);
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.card-explain h1 {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+    padding: 8px 42px;
+}
+
+.card-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+}
+
+.card-description #item {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+#img-item {
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 16px;
+}
+
+#activate-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 18px;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1px solid #007ACD;
+    color: #007ACD;
+    height: 48px;
+    width: 160px;
+}
+
+#order-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #007ACD;
+    border: none;
+    color: white;
+    width: 160px;
+    height: 48px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    width: 100%;
+    margin-top: 100px;
+}

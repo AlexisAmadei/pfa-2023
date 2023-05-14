@@ -4,11 +4,17 @@ import { useState } from "react";
 import { db } from "../config/configFirebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
+import "../css/Card.css";
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import EngieAppBar from "../components/EngieAppBar";
+
+import CardImage from "../assets/card.png";
+import CarBattery from "../assets/CardView/car.svg";
+import ChargeIcon from "../assets/CardView/charge.svg";
+import MoneyIcon from "../assets/CardView/tirelire.svg";
 
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 const style = {
@@ -76,21 +82,31 @@ export default function Card() {
   }, []);
 
   return (
-    <div>
+    <div style={{ height:'100vh' }}>
+      <div className="header-card">
+        <img src={CardImage} alt="card" />
+      </div>
+      <div className="card-explain">
+        <h1>Unce carte de recharge ENGIE avec tous les avantages</h1>
+        <div className="card-description">
+          <p id="item"><img id="img-item" src={CarBattery} />Pratique et économique ! Rechargez votre voiture sur plus de 270 000 borne en France et en Europe.</p>
+          <p id="item"><img id="img-item" src={ChargeIcon} />Livraison gratuite, sans abonnement, sans engagement et sans consommation minimale.</p>
+          <p id="item"><img id="img-item" src={MoneyIcon} />Profitez de tarifs préférentiels sur les bornes ENGIE !</p>
+        </div>
+      </div>
       {cardNumber === "" ? (
-        <>
-          <p>Vous n'avez pas encore de carte RFID</p>
-          <Button onClick={handleOpen}>Ajouter une carte RFID</Button>
-        </>
+        <div className="buttons-container">
+          <button id="activate-card" onClick={handleOpen}>Activer ma carte</button>
+          <button id="order-card"
+            onClick={() => window.location.href = "https://mobiliteverte.engie.fr/" }
+          >Commander</button>
+        </div >
       ) : (
         <>
           <p>Vous avez déjà une carte RFID</p>
           <Button onClick={handleOpen}>Editer la carte</Button>
         </>
       )}
-      <div>
-        <p>Current card number: {cardNumber}</p>
-      </div>
       <Modal
         open={open}
         onClose={handleClose}

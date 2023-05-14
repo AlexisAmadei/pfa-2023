@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+
 import EngieAppBar from "../components/EngieAppBar";
 import ViewHeader from "../components/ViewHeader";
 import "../css/Feedback.css"
+
+import { db } from "../config/configFirebase";
 
 export default function Feedback() {
   const items = [
@@ -27,6 +30,11 @@ export default function Feedback() {
 
   const handleNumberClick = (number) => {
     setSelectedNumber(number);
+  };
+
+  const handleSubmit = () => {
+    const bornID = localStorage.getItem('borneID');
+    const commentRef = doc(db, 'feedback', bornID);
   };
 
   return (
@@ -68,7 +76,7 @@ export default function Feedback() {
           <textarea id="feedback-comment"
             placeholder="Décrivez le(s) problème(s) rencontré(s) en quelques lignes..."
           />
-          <button id="button-active">Continuer</button>
+          <button id="button-active" onClick={handleSubmit}>Continuer</button>
         </div>
       )}
       {selectedItems.length === 0 && (
