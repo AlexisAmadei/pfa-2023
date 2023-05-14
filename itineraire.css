@@ -1,0 +1,182 @@
+#itineraire {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 377px;
+    height: 538px;
+    background-image: url('/pfa-2023/src/css/maptrajetmaptrajet.png');
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  
+  input[type="text"], ul {
+    width: 100%;
+  }
+  
+/*calcule de l'itineraire*/
+.previsualisationtrjet {
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 50px;
+  }
+  
+  .top-bar {
+    background-color: gray;
+    height: 10px;
+    width: 30%;
+  }
+  
+  .content {
+    background-color: gray;
+    padding: 10px;
+    flex-grow: 1;
+  }
+  
+  .time-distance {
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .time-distance p {
+    margin: 0;
+    font-weight: bold; 
+    margin-right: 5px; 
+  }
+  
+  .buttondeprix {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .custom-button {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+  
+  
+  .vertical-line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .point {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; 
+  }
+  
+  .point::after {
+    content: "";
+    flex-grow: 1;
+    height: 2px;
+    background-color: black;
+    margin-left: 5px; 
+  }
+  
+  .point-text {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .previsualisationtrjet2 {
+    margin-bottom: 0;
+    margin-bottom: 200px;
+  }
+  
+  .previsualisationtrjet:nth-child(2) {
+    margin-top: -147px;
+    background-color: white;
+    margin-bottom: 200px;
+  }
+
+  .charge-info {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+  }
+/*fin de calcule*/
+.itineraire-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border: 2px solid gray;
+    width: 95%;
+    height: auto;
+    position: fixed;
+    bottom: 77px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; 
+}
+
+#creerItineraire {
+    padding: 10px 100px;
+    font-size: 18px;
+}
+
+footer {
+    background-color: #f1f1f1;
+    width: 100%;
+    padding: 4px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    z-index: 2; 
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer li {
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+footer a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer a img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
+
+footer a:hover {
+    background-color: #ddd;
+}
