@@ -3,7 +3,7 @@ import React from 'react';
 import './css/ProgressCircle.css';
 
 const ProgressCircle = (props) => {
-  const { percentage, circleWidth, current } = props;
+  const { percentage, circleWidth, bolt } = props;
   const radius = 85;
   const dashArray = radius * Math.PI * 2;
   const dashOffset = dashArray - (dashArray * percentage) / 100;

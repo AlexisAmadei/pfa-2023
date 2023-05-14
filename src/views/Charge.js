@@ -204,5 +204,39 @@ export default function Charge() {
         <EngieAppBar active='charge' />
       </div>
     );
+  } else {
+    return (
+      <div className="charging-view">
+        <div className="charge-header">
+          <p><span>Recharge</span> en cours</p>
+        </div>
+        <div className="charging-stats">
+          <ProgressCircle
+            percentage={wantedCharge}
+            circleWidth={200}
+            current={carBattery}
+          />
+          <p id="objectif">Objectif {wantedCharge}%</p>
+        </div>
+        <div className="remaining-stats">
+          <div className="remaining-stats-item">
+            <p>Prix dépensé</p>
+            <p id="stats-value">{0}€</p>
+          </div>
+          <div className="remaining-stats-item">
+            <p>Temps restant</p>
+            <p id="stats-value">{timeToCharge}</p>
+          </div>
+          <div className="remaining-stats-item">
+            <p>Gain d'autonomie</p>
+            <p id="stats-value">~ {0}km</p>
+          </div>
+        </div>
+        <div className="stop-charge">
+          <button onClick={() => setHaveSettings(false)}>Arrêter la recharge</button>
+        </div>
+        <EngieAppBar active='charge' />
+      </div>
+    );
   }
 }
