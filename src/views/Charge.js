@@ -18,14 +18,18 @@ import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
 import { db } from "../config/configFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import Summary from "./Summary";
+import Feedback from "./Feedback";
+import ViewHeader from "../components/ViewHeader";
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false); // true skip second view state
   const [endCharge, setEndCharge] = useState(true); // true skip third view state
+  const [skipSummary, setSkipSummary] = useState(false); // true skip fourth view state
+  const [skipFeedback, setSkipFeedback] = useState(false); // true skip fifth view state
 
-  const [haveBorneID, setHaveBorneID] = useState(true); // true skip first view state
+  const [haveBorneID, setHaveBorneID] = useState(false); // true skip first view state
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(50);
   const [getQR, setGetQR] = useState('');
@@ -125,9 +129,7 @@ export default function Charge() {
   if (!haveBorneID) {
     return (
       <div className="first-view">
-        <div className="charge-header">
-          <p><span>Se connecter</span> à la borne</p>
-        </div>
+        <ViewHeader highlight="Se connecter" text="à la borne" />
         <div className="qr-reader">
           <QRreader getReturnValue={(getQR) => setGetQR(getQR)} />
         </div>
@@ -145,9 +147,7 @@ export default function Charge() {
   } else if (!haveSettings) {
     return (
       <div className="preview-charge">
-        <div className="charge-header">
-          <p><span>Paramètres</span> de recharge</p>
-        </div>
+        <ViewHeader highlight="Paramètres" text="de charge" />
         <div className="suggest-charge-container">
           <p style={{ marginBottom: '8px' }}>Charge recommandée pour l'itinéraire</p>
           <div className="suggest-charge">
@@ -210,9 +210,7 @@ export default function Charge() {
   } else if (!endCharge){
     return (
       <div className="charging-view">
-        <div className="charge-header">
-          <p><span>Recharge</span> en cours</p>
-        </div>
+        <ViewHeader highlight="Recharge" text="en cours" />
         <div className="charging-stats">
           <ProgressCircle
             percentage={wantedCharge}
@@ -242,12 +240,17 @@ export default function Charge() {
         <EngieAppBar active='charge' />
       </div>
     );
-  } else {
+  } else if (!skipSummary) {
     return (
       <Summary
         startPercentage={carBattery}
         endPercentage={wantedCharge}
+        setSkipSummary={setSkipSummary}
       />
     );
-  }
+  } else if (!skipFeedback) {
+    return (
+      <Feedback />
+    );
+  };
 }

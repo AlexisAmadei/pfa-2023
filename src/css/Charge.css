@@ -47,7 +47,6 @@ p {
 .suggest-charge-container {
     width: 100%;
     text-align: left;
-    margin-top: 100px;
 }
 
 .suggest-charge {
@@ -145,11 +144,15 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
     width: 100%;
     gap: 35px;
     box-sizing: border-box;
+}
+
+.charging-stats {
+    margin-top: 100px;
+    margin-bottom: 28px;
 }
 
 #objectif {

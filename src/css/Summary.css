@@ -8,23 +8,8 @@
     box-sizing: border-box;
 }
 
-.summary-header {
-    width: 100%;
-    position: absolute;
-    text-align: center;
-    color: #1A4374;
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 28px;
-    background-color: white;
-    top: 0;
-    top: 40px;
-}
-
 .summary-progressCircle {
-    margin-top: 100px;
+    margin-top: 16px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

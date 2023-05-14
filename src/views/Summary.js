@@ -5,15 +5,15 @@ import ProgressCircle from "../components/ProgressCircle";
 import arrowVector from "../assets/arrowVector.svg";
 import HeartIcon from "../assets/heart.svg";
 import EngieAppBar from "../components/EngieAppBar";
+import ViewHeader from "../components/ViewHeader";
+import Feedback from "./Feedback";
 
-export default function Summary({ startPercentage, endPercentage }) {
+export default function Summary({ startPercentage, endPercentage, setSkipSummary }) {
   let radius = 66;
 
   return (
     <div className="summary-container">
-      <div className="summary-header">
-        <p><span>Récapitulatif</span> de recharge</p>
-      </div>
+      <ViewHeader highlight="Récapitulatif" text="de recharge" />
       <div className="summary-progressCircle">
         <ProgressCircle
           percentage={startPercentage}
@@ -48,7 +48,7 @@ export default function Summary({ startPercentage, endPercentage }) {
           <p id="stats-value">~ 100km</p>
         </div>
         <p id="save-stats"><img src={HeartIcon} />Enregistrer les options de recharges</p>
-        <button id="continue">Continuer</button>
+        <button onClick={() => setSkipSummary(true) } id="continue">Continuer</button>
       </div>
       <EngieAppBar active='charge' />
     </div>
