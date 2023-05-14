@@ -17,11 +17,13 @@ import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
 
 import { db } from "../config/configFirebase";
 import { doc, getDoc } from "firebase/firestore";
+import Summary from "./Summary";
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false); // true skip second view state
+  const [endCharge, setEndCharge] = useState(true); // true skip third view state
 
   const [haveBorneID, setHaveBorneID] = useState(true); // true skip first view state
   const [borneID, setBorneID] = useState("");
@@ -176,6 +178,7 @@ export default function Charge() {
             percentage={wantedCharge}
             circleWidth={200}
             current={carBattery}
+            radius={80}
           />
         </div>
         <div className="preview-stats">
@@ -204,7 +207,7 @@ export default function Charge() {
         <EngieAppBar active='charge' />
       </div>
     );
-  } else {
+  } else if (!endCharge){
     return (
       <div className="charging-view">
         <div className="charge-header">
@@ -215,6 +218,7 @@ export default function Charge() {
             percentage={wantedCharge}
             circleWidth={200}
             current={carBattery}
+            radius={80}
           />
           <p id="objectif">Objectif {wantedCharge}%</p>
         </div>
@@ -237,6 +241,13 @@ export default function Charge() {
         </div>
         <EngieAppBar active='charge' />
       </div>
+    );
+  } else {
+    return (
+      <Summary
+        startPercentage={carBattery}
+        endPercentage={wantedCharge}
+      />
     );
   }
 }
