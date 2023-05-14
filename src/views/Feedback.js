@@ -5,6 +5,7 @@ import ViewHeader from "../components/ViewHeader";
 import "../css/Feedback.css"
 
 import { db } from "../config/configFirebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export default function Feedback() {
   const items = [

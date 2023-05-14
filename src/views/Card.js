@@ -89,9 +89,9 @@ export default function Card() {
       <div className="card-explain">
         <h1>Unce carte de recharge ENGIE avec tous les avantages</h1>
         <div className="card-description">
-          <p id="item"><img id="img-item" src={CarBattery} />Pratique et économique ! Rechargez votre voiture sur plus de 270 000 borne en France et en Europe.</p>
-          <p id="item"><img id="img-item" src={ChargeIcon} />Livraison gratuite, sans abonnement, sans engagement et sans consommation minimale.</p>
-          <p id="item"><img id="img-item" src={MoneyIcon} />Profitez de tarifs préférentiels sur les bornes ENGIE !</p>
+          <p id="item"><img id="img-item" src={CarBattery} alt="icon" />Pratique et économique ! Rechargez votre voiture sur plus de 270 000 borne en France et en Europe.</p>
+          <p id="item"><img id="img-item" src={ChargeIcon} alt="icon" />Livraison gratuite, sans abonnement, sans engagement et sans consommation minimale.</p>
+          <p id="item"><img id="img-item" src={MoneyIcon} alt="icon" />Profitez de tarifs préférentiels sur les bornes ENGIE !</p>
         </div>
       </div>
       {cardNumber === "" ? (
