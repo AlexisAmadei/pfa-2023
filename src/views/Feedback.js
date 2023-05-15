@@ -5,7 +5,9 @@ import ViewHeader from "../components/ViewHeader";
 import "../css/Feedback.css"
 
 import { db } from "../config/configFirebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Feedback() {
   const items = [
@@ -20,22 +22,24 @@ export default function Feedback() {
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedNumber, setSelectedNumber] = useState(null);
+  const navigate = useNavigate();
 
   const handleItemClick = (item) => {
-    if (selectedItems.includes(item)) {
+    if (selectedItems.includes(item))
       setSelectedItems(selectedItems.filter(i => i !== item));
-    } else {
-      setSelectedItems([...selectedItems, item]);
-    }
+    else setSelectedItems([...selectedItems, item]);
   };
 
-  const handleNumberClick = (number) => {
-    setSelectedNumber(number);
-  };
+  const handleNumberClick = (number) => setSelectedNumber(number);
 
-  const handleSubmit = () => {
-    const bornID = localStorage.getItem('borneID');
-    const commentRef = doc(db, 'feedback', bornID);
+  const handleSubmit = async () => {
+    await addDoc(collection(db, "feedback"), {
+      borneID: localStorage.getItem('borneID'),
+      grade: selectedNumber,
+      report: selectedItems,
+      comment: document.getElementById('feedback-comment').value,
+    });
+    navigate('/');
   };
 
   return (
@@ -74,10 +78,8 @@ export default function Feedback() {
       </div>
       {selectedItems.length > 0 && (
         <div className="comment-container">
-          <textarea id="feedback-comment"
-            placeholder="Décrivez le(s) problème(s) rencontré(s) en quelques lignes..."
-          />
-          <button id="button-active" onClick={handleSubmit}>Continuer</button>
+          <textarea id="feedback-comment" placeholder="Décrivez le(s) problème(s) rencontré(s) en quelques lignes..." />
+          <button id="button-active" onClick={() => handleSubmit()}>Continuer</button>
         </div>
       )}
       {selectedItems.length === 0 && (

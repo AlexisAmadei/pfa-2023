@@ -16,49 +16,44 @@ import CircleChecked from '@mui/icons-material/CheckCircle';
 import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
 
 import { db } from "../config/configFirebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Summary from "./Summary";
 import Feedback from "./Feedback";
 import ViewHeader from "../components/ViewHeader";
+
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false); // true skip second view state
-  const [endCharge, setEndCharge] = useState(false); // true skip third view state
-  const [skipSummary, setSkipSummary] = useState(false); // true skip fourth view state
+  const [endCharge, setEndCharge] = useState(true);        // true skip third view state
+  const [skipSummary, setSkipSummary] = useState(false);   // true skip fourth view state
   const [skipFeedback, setSkipFeedback] = useState(false); // true skip fifth view state
+  const [haveBorneID, setHaveBorneID] = useState(false);   // true skip first view state
 
-  const [haveBorneID, setHaveBorneID] = useState(false); // true skip first view state
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(50);
   const [getQR, setGetQR] = useState('');
-
   const [carBattery, setCarBattery] = useState(0);
   const [carMaxCapacity, setCarMaxCapacity] = useState(0);
   const [carMaxAutonomy, setCarMaxAutonomy] = useState(0);
-  const [carCurrentCapacity, setCurrentCarCapacity] = useState(0);
   const [wantedCharge, setWantedCharge] = useState(carBattery || 0);
   const [delta, setDelta] = useState(0);
-
   const [timeToCharge, setTimeToCharge] = useState(0);
   const [costToCharge, setCostToCharge] = useState(0);
   const [autonomy, setAutonomy] = useState(0);
   const [newAutonomy, setNewAutonomy] = useState(0);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-  const handleSlider = (e) => {
-    setWantedCharge(e.target.value);
-  };
+  const handleChange = (event) => setChecked(event.target.checked);
+  const handleSlider = (e) => setWantedCharge(e.target.value);
+  function getNewAutonomy() { setNewAutonomy(((wantedCharge / 100) * carMaxAutonomy).toFixed(0)); }
+
   const getBornePower = async () => {
     const docRef = doc(db, "bornes", borneID);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setBornePower(docSnap.data().power);
-    }
+    if (docSnap.exists()) setBornePower(docSnap.data().power);
   };
+
   const handleBorneID = async (e) => {
     const docRef = doc(db, "bornes", e);
     const docSnap = await getDoc(docRef);
@@ -66,32 +61,26 @@ export default function Charge() {
       setHaveBorneID(true);
       setBorneID(e);
       getBornePower();
-    } else {
-      alert("Cette borne n'existe pas");
-      console.error("Qr code invalide");
-    }
+    } else alert("Cette borne n'existe pas");
   };
-
-  function getNewAutonomy() { setNewAutonomy(((wantedCharge / 100) * carMaxAutonomy).toFixed(0)); }
 
   function getNewCost() {
     const deltaKWH = ((wantedCharge - carBattery) / 100) * carMaxCapacity;
+
     setDelta(deltaKWH);
     setCostToCharge((deltaKWH * 0.55).toFixed(2));
   }
+
   function getNewTime() {
     let timeFormat = null;
     const time = (delta / bornePower) * 60;
-    if (time < 60) {
-      timeFormat = `${time.toFixed(0)} min`;
-    }
-    else {
-      timeFormat = `${(time / 60).toFixed(0)} h ${(time % 60).toFixed(0)} min`;
-    }
+
+    if (time < 60) timeFormat = `${time.toFixed(0)} min`;
+    else timeFormat = `${(time / 60).toFixed(0)} h ${(time % 60).toFixed(0)} min`;
     setTimeToCharge(timeFormat);
   }
 
-  useEffect(() => { // get all infos on render then shouldn't update
+  useEffect(() => {
     const getCarInfo = async () => {
       const carUserRef = doc(db, "users", userUID);
       const carUserSnap = await getDoc(carUserRef);
@@ -117,7 +106,7 @@ export default function Charge() {
   }, [autonomy, carBattery]);
 
   useEffect(() => {
-    if (getQR !== '') { handleBorneID(getQR); }
+    if (getQR !== '') { () => handleBorneID(getQR); }
   }, [getQR]);
 
   useEffect(() => {
@@ -125,6 +114,16 @@ export default function Charge() {
     getNewCost();
     getNewTime();
   }, [wantedCharge, carMaxAutonomy]);
+
+  const updateCharge = async () => {
+    const docRef = doc(db, "users", userUID);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(docRef, { "carPro.battery": docSnap.data().carPro.battery + 1, });
+      setCarBattery(docSnap.data().carPro.battery);
+    }
+  };
 
   if (!haveBorneID) {
     return (
@@ -207,18 +206,19 @@ export default function Charge() {
         <EngieAppBar active='charge' />
       </div>
     );
-  } else if (!endCharge){
+  } else if (!endCharge) {
     return (
       <div className="charging-view">
         <ViewHeader highlight="Recharge" text="en cours" />
         <div className="charging-stats">
           <ProgressCircle
-            percentage={wantedCharge}
+            percentage={carBattery}
             circleWidth={200}
             current={carBattery}
             radius={80}
           />
           <p id="objectif">Objectif {wantedCharge}%</p>
+          <button id="fake-charge" onClick={() => updateCharge()}>Simuler la charge</button>
         </div>
         <div className="remaining-stats">
           <div className="remaining-stats-item">
