@@ -1,14 +1,16 @@
 import React from "react";
+import { useState } from "react";
 
 import "../css/Summary.css";
 import ProgressCircle from "../components/ProgressCircle";
 import arrowVector from "../assets/arrowVector.svg";
 import HeartIcon from "../assets/heart.svg";
+import FullHeartIcon from "../assets/heartFull.svg";
 import EngieAppBar from "../components/EngieAppBar";
 import ViewHeader from "../components/ViewHeader";
-import Feedback from "./Feedback";
 
 export default function Summary({ startPercentage, endPercentage, setSkipSummary }) {
+  const [isFavorite, setIsFavorite] = useState(false);
   let radius = 66;
 
   return (
@@ -47,8 +49,15 @@ export default function Summary({ startPercentage, endPercentage, setSkipSummary
           <p>Gain d'autonomie</p>
           <p id="stats-value">~ 100km</p>
         </div>
-        <p id="save-stats"><img src={HeartIcon} />Enregistrer les options de recharges</p>
-        <button onClick={() => setSkipSummary(true) } id="continue">Continuer</button>
+        {isFavorite ?
+          <div>
+            <p id="save-stats" onClick={() => setIsFavorite(false)} ><img src={FullHeartIcon} alt="full heart" /> Enregistrer cette recharge</p>
+          </div> :
+          <div>
+            <p id="save-stats" onClick={() => setIsFavorite(true)} ><img src={HeartIcon} alt="heart" /> Enregistrer cette recharge</p>
+          </div>
+        }
+        <button onClick={() => setSkipSummary(true)} id="continue">Continuer</button>
       </div>
       <EngieAppBar active='charge' />
     </div>
