@@ -1,0 +1,16 @@
+.view-header {
+    width: 100%;
+    text-align: center;
+    color: #1A4374;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    background-color: white;
+    margin-top: 24px;
+}
+
+.view-header span {
+    color: #007ACD;
+}

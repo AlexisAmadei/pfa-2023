@@ -1,0 +1,20 @@
+.circle-background {
+  fill: none;
+  stroke: gainsboro;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: #007ACD;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.circle-text {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
+  text-align: center;
+  color: #171D21
+}

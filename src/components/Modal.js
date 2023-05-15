@@ -25,7 +25,7 @@ const style = {
 export default function BasicModal() {
   const [open, setOpen] = useState(false);
   const [cars, setCars] = useState([]);
-  const [selectedCar, setSelectedCar] = useState('');
+  const [selectedCar, setSelectedCar] = useState({});
   const [selectedCarType, setSelectedCarType] = useState('');
 
   const handleOpen = () => setOpen(true);
@@ -37,11 +37,17 @@ export default function BasicModal() {
     if (userSnap.exists()) {
       if (selectedCarType === "1") {
         await updateDoc(userRef, {
-          carPerso: selectedCar
+          carPerso: {
+            name: selectedCar,
+            battery: 76,
+          }
         });
       } else if (selectedCarType === "2") {
         await updateDoc(userRef, {
-          carPro: selectedCar
+          carPro: {
+            name: selectedCar,
+            battery: 76,
+          }
         });
       }
     } else console.error("User not found");
