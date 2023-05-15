@@ -56,8 +56,8 @@ export default function Card() {
 
   const handleCardNumberChange = (e) => {
     const value = e.target.value;
-    setInputCardNumber(value);
 
+    setInputCardNumber(value);
     if (value.length > 10 || value.length < 10) {
       setCardNumberError(true);
       setCardNumberHelperText("Le numéro doit contenir 10 chiffres");

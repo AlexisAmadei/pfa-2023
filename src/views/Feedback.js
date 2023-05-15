@@ -25,16 +25,12 @@ export default function Feedback() {
   const navigate = useNavigate();
 
   const handleItemClick = (item) => {
-    if (selectedItems.includes(item)) {
+    if (selectedItems.includes(item))
       setSelectedItems(selectedItems.filter(i => i !== item));
-    } else {
-      setSelectedItems([...selectedItems, item]);
-    }
+    else setSelectedItems([...selectedItems, item]);
   };
 
-  const handleNumberClick = (number) => {
-    setSelectedNumber(number);
-  };
+  const handleNumberClick = (number) => setSelectedNumber(number);
 
   const handleSubmit = async () => {
     await addDoc(collection(db, "feedback"), {

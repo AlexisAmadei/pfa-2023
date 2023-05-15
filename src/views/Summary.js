@@ -11,8 +11,8 @@ import ViewHeader from "../components/ViewHeader";
 
 export default function Summary({ startPercentage, endPercentage, setSkipSummary }) {
   const [isFavorite, setIsFavorite] = useState(false);
-  let radius = 66;
 
+  let radius = 66;
   return (
     <div className="summary-container">
       <ViewHeader highlight="Récapitulatif" text="de recharge" />
