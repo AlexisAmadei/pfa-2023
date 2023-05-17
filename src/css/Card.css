@@ -78,3 +78,11 @@
     width: 100%;
     margin-top: 100px;
 }
+
+.display-card-state {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 48px;
+}

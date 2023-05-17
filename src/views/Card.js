@@ -102,10 +102,10 @@ export default function Card() {
           >Commander</button>
         </div >
       ) : (
-        <>
-          <p>Vous avez déjà une carte RFID</p>
+        <div className="display-card-state">
+          <p>Votre carte actuelle {cardNumber}</p>
           <Button onClick={handleOpen}>Editer la carte</Button>
-        </>
+        </div>
       )}
       <Modal
         open={open}
