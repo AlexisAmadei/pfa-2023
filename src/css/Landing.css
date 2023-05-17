@@ -18,6 +18,16 @@
     z-index: 1000;
 }
 
-.swipeable-drawer-container {
-    padding-bottom: 96px;
+.search-box {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    width: 100%;
+    padding: 0 16px;
+}
+
+.address-searchBar {
+    border: 1px solid #435C6E;
 }
