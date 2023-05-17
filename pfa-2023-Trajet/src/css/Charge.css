@@ -1,0 +1,12 @@
+.charge-header {
+    color: #1A4374;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.charge-header span {
+    color: #007ACD;
+}
