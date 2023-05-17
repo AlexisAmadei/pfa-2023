@@ -25,11 +25,11 @@ const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Charge() {
   const [checked, setChecked] = useState(false);
-  const [haveSettings, setHaveSettings] = useState(false); // true skip second view state
+  const [haveSettings, setHaveSettings] = useState(false);  // true skip second view state
   const [endCharge, setEndCharge] = useState(true);        // true skip third view state
-  const [skipSummary, setSkipSummary] = useState(false);   // true skip fourth view state
-  const [skipFeedback, setSkipFeedback] = useState(false); // true skip fifth view state
-  const [haveBorneID, setHaveBorneID] = useState(false);   // true skip first view state
+  const [skipSummary, setSkipSummary] = useState(false);    // true skip fourth view state
+  const [skipFeedback, setSkipFeedback] = useState(false);  // true skip fifth view state
+  const [haveBorneID, setHaveBorneID] = useState(false);    // true skip first view state
 
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(50);

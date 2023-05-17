@@ -1,0 +1,28 @@
+.itinerary-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    /* height: 100vh; */
+    padding: 8px;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    height: fit-content;
+    padding: 8px;
+    margin: 0;
+    max-height: 400px;
+}
+
+.car-item {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    height: fit-content;
+    padding: 8px;
+    margin: 0;
+    max-height: 400px;
+}

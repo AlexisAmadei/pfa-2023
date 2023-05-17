@@ -4,7 +4,7 @@ import { QrReader } from 'react-qr-reader';
 const containerStyle = {
   width: '272px',
   height: 'min-content',
-  borderRadius: '10px',
+  borderRadius: '50%',
   alignSelf: 'center',
 };
 
