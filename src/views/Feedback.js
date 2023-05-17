@@ -30,7 +30,10 @@ export default function Feedback() {
     else setSelectedItems([...selectedItems, item]);
   };
 
-  const handleNumberClick = (number) => setSelectedNumber(number);
+  const handleNumberClick = (number) => {
+    setSelectedNumber(number);
+    console.log(number);
+  };
 
   const handleSubmit = async () => {
     await addDoc(collection(db, "feedback"), {
@@ -76,13 +79,13 @@ export default function Feedback() {
           ))}
         </div>
       </div>
-      {selectedItems.length > 0 && (
+      {selectedNumber !== null && (
         <div className="comment-container">
           <textarea id="feedback-comment" placeholder="Décrivez le(s) problème(s) rencontré(s) en quelques lignes..." />
           <button id="button-active" onClick={() => handleSubmit()}>Continuer</button>
         </div>
       )}
-      {selectedItems.length === 0 && (
+      {selectedNumber === null && (
           <button id="button-inactive">Continuer</button>
       )}
       <EngieAppBar active="charge" />

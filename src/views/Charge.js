@@ -106,7 +106,7 @@ export default function Charge() {
   }, [autonomy, carBattery]);
 
   useEffect(() => {
-    if (getQR !== '') { () => handleBorneID(getQR); }
+    if (getQR !== '') { handleBorneID(getQR); }
   }, [getQR]);
 
   useEffect(() => {
