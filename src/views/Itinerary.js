@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "../css/Itinerary.css";
 import LoupeIcon from "../assets/loupeIcon.svg";
+import currentLocationIcon from "../assets/currentLocation.svg";
 import EngieAppBar from "../components/EngieAppBar";
 
 import TextField from '@mui/material/TextField';
@@ -14,8 +15,23 @@ export default function Itinerary() {
   const [userDoc, setUserDoc] = useState("");
   const [carPerso, setCarPerso] = useState("");
   const [carPro, setCarPro] = useState("");
+  const [preFillCurrent, setPreFillCurrent] = useState("Position actuelle");
 
   useEffect(() => {
+    function handleSetLocation() {
+      let geolocation = "";
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          localStorage.setItem("geolocation", JSON.stringify(geolocation));
+          console.log("mine->", geolocation);
+          console.log("local", localStorage.getItem("geolocation"));
+        });
+      }
+    };
     const fetchUserData = async () => {
       const userRef = doc(db, "users", fakeUserUID);
       const userSnap = await getDoc(userRef);
@@ -23,6 +39,7 @@ export default function Itinerary() {
       else console.error("No such car in db.");
     };
     fetchUserData();
+    handleSetLocation();
   }, []);
 
   useEffect(() => {
@@ -44,12 +61,18 @@ export default function Itinerary() {
     }
   }, [userDoc]);
 
+  const handleEndAdornmentClick = () => {
+    const geolocation = JSON.parse(localStorage.getItem("geolocation")) || "";
+    if (geolocation) setPreFillCurrent(`Lat: ${geolocation.lat}, Long: ${geolocation.lng}`);
+  };
+
   return (
     <div>
       <div className="itinerary-container">
         <div className="search-container">
           {/* <span className="add-search">+</span> */}
           <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+            value={preFillCurrent}
             placeholder="Choisir un point de départ"
             fullWidth={true}
             sx={{
@@ -63,9 +86,17 @@ export default function Itinerary() {
                   <img src={LoupeIcon} alt="loupe" />
                 </InputAdornment>
               ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <button onClick={handleEndAdornmentClick} style={{ background: 'none', border: 'none' }}>
+                    <img src={currentLocationIcon} height={28} alt="currentLocation" />
+                  </button>
+                </InputAdornment>
+              )
             }}
           />
           <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+            defaultValue={localStorage.getItem("destination")}
             placeholder="Choisir un point d'arrivée"
             fullWidth={true}
             sx={{
@@ -77,7 +108,7 @@ export default function Itinerary() {
                 <InputAdornment position="start">
                   <img src={LoupeIcon} alt="loupe" />
                 </InputAdornment>
-              ),
+              )
             }}
           />
         </div>
@@ -86,7 +117,7 @@ export default function Itinerary() {
           <div className="car-selection-card">
             {userDoc.carPerso && (
               <div className="car-item">
-                <img id="carIMG" height={20} src={carPerso.img} alt="car image" />
+                <img id="carIMG" height={20} src={carPerso.img} alt="car" />
                 <span id="carNAME">{userDoc.carPerso.name}</span>
                 <span id="carAUTONOMY">{carPerso.autonomy}km</span>
                 <span id="carPOWER">{carPerso.power}kw</span>

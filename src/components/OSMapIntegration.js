@@ -57,6 +57,7 @@ const MapComponent = () => {
     };
     getCurrentLocation()
       .then((coords) => { setPosition(coords); })
+      .then(localStorage.setItem("currentLocation", position))
       .catch((error) => { console.error(error); });
   }, []);
 

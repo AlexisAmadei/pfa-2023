@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import OSP from "../components/OSMapIntegration";
 import EngieAppBar from "../components/EngieAppBar";
@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 export default function Landing() {
   const navigate = useNavigate();
 
-  function sendAddress(address) {
-    navigate("/itinerary", {state: {address: address}});
+  function sendAddress(e) {
+    if (e.key !== "Enter") return;
+    localStorage.setItem("destination", e.target.value);
+    navigate("/itinerary");
   }
 
   return (
@@ -35,7 +37,7 @@ export default function Landing() {
               </InputAdornment>
             ),
           }}
-          onKeyDown={(e) => {sendAddress(e.target.value)}}
+          onKeyDown={(e) => {sendAddress(e)}}
         />
       </div>
       <div className="landing-footer">
