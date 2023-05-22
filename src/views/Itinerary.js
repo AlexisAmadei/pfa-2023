@@ -15,7 +15,17 @@ export default function Itinerary() {
   const [userDoc, setUserDoc] = useState("");
   const [carPerso, setCarPerso] = useState("");
   const [carPro, setCarPro] = useState("");
-  const [preFillCurrent, setPreFillCurrent] = useState("Position actuelle");
+
+  // slider values
+  const [currentCharge, setCurrentCharge] = useState(0);
+  const [wantedCharge, setWantedCharge] = useState(0);
+
+  const [preFillCurrent, setPreFillCurrent] = useState("");
+
+  const handleSlider = (e, destination) => {
+    if (destination === "current") setCurrentCharge(e.target.value);
+    else setWantedCharge(e.target.value);
+  };
 
   useEffect(() => {
     function handleSetLocation() {
@@ -27,8 +37,6 @@ export default function Itinerary() {
             lng: position.coords.longitude,
           };
           localStorage.setItem("geolocation", JSON.stringify(geolocation));
-          console.log("mine->", geolocation);
-          console.log("local", localStorage.getItem("geolocation"));
         });
       }
     };
@@ -89,7 +97,7 @@ export default function Itinerary() {
               endAdornment: (
                 <InputAdornment position="end">
                   <button onClick={handleEndAdornmentClick} style={{ background: 'none', border: 'none' }}>
-                    <img src={currentLocationIcon} height={28} alt="currentLocation" />
+                    <img src={currentLocationIcon} height={22} alt="currentLocation" />
                   </button>
                 </InputAdornment>
               )
@@ -124,6 +132,38 @@ export default function Itinerary() {
                 <span id="car-label" style={{ color: "white" }}>Perso</span>
               </div>
             )}
+          </div>
+        </div>
+        <div className="slider-container">
+          <div className="slider-item">
+            <div className="text-label">
+              <span>Charge du véhicule avant de partir</span>
+              <span>{currentCharge}%</span>
+            </div>
+            <input type="range"
+              min="0" max="100"
+              value={currentCharge}
+              onChange={(e) => handleSlider(e, "current")}
+              className="slider" id="myRange"
+              style={{
+                background: `linear-gradient(to right, #007ACD 0%, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%, #EBEEF1 100%)`
+              }}
+            />
+          </div>
+          <div className="slider-item">
+            <div className="text-label">
+              <span>Charge du véhicule à l'arrivée</span>
+              <span>{wantedCharge}%</span>
+            </div>
+            <input type="range"
+              min="0" max="100"
+              value={wantedCharge}
+              onChange={(e) => handleSlider(e, "destination")}
+              className="slider" id="myRange"
+              style={{
+                background: `linear-gradient(to right, #007ACD 0%, #007ACD ${wantedCharge}%, #EBEEF1 ${wantedCharge}%, #EBEEF1 100%)`
+              }}
+            />
           </div>
         </div>
       </div>

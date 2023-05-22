@@ -6,11 +6,14 @@ const containerStyle = {
   height: 'min-content',
   borderRadius: '50%',
   alignSelf: 'center',
+  // zIndex: '1',
 };
 
 const qrReaderStyle = {
   width: '272px',
   height: '272px',
+  // borderRadius: '50%',
+  // zIndex: '999',
 };
 
 export default function QRreader({ getReturnValue }) {
@@ -32,7 +35,6 @@ export default function QRreader({ getReturnValue }) {
         }}
         constraints={{ facingMode: 'environment' }}
         style={qrReaderStyle}
-        legacyMode
       />
     </div>
   );
