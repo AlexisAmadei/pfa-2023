@@ -21,6 +21,7 @@ export default function Itinerary() {
   const [wantedCharge, setWantedCharge] = useState(0);
 
   const [preFillCurrent, setPreFillCurrent] = useState("");
+  const [clickable, setClickable] = useState(true);
 
   const handleSlider = (e, destination) => {
     if (destination === "current") setCurrentCharge(e.target.value);
@@ -68,6 +69,11 @@ export default function Itinerary() {
       fetchCarPro();
     }
   }, [userDoc]);
+
+  useEffect(() => {
+    if (currentCharge && wantedCharge) setClickable(true);
+    else setClickable(false);
+  }, [currentCharge, wantedCharge]);
 
   const handleEndAdornmentClick = () => {
     const geolocation = JSON.parse(localStorage.getItem("geolocation")) || "";
@@ -166,6 +172,8 @@ export default function Itinerary() {
             />
           </div>
         </div>
+        {clickable && ( <button id="ready">Commencer l'itinéraire</button> )}
+        {!clickable && ( <button id="not-ready">Commencer l'itinéraire</button> )}
       </div>
       <EngieAppBar active="itinerary" />
     </div>

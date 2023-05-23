@@ -67,3 +67,45 @@ input::-webkit-slider-thumb {
     justify-content: space-between;
     width: 100%;
 }
+
+#ready {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    gap: 8px;
+    background: #007ACD;
+    border: none;
+    width: 100%;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+
+#not-ready {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    gap: 8px;
+    background: #AFCBDF;
+    border: none;
+    width: 100%;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+
+#ready:active {
+    background-color: #0f6097;
+}
