@@ -9,7 +9,7 @@ import FullHeartIcon from "../assets/heartFull.svg";
 import EngieAppBar from "../components/EngieAppBar";
 import ViewHeader from "../components/ViewHeader";
 
-export default function Summary({ startPercentage, endPercentage, setSkipSummary }) {
+export default function Summary({ startPercentage, endPercentage, setSkipSummary, dataObject }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   let radius = 66;
@@ -38,16 +38,16 @@ export default function Summary({ startPercentage, endPercentage, setSkipSummary
         <div className="upper-items">
           <div className="stats-item">
             <p>Prix total</p>
-            <p id="stats-value">0€</p>
+            <p id="stats-value">{dataObject.endPrice}€</p>
           </div>
           <div className="stats-item">
             <p id="item-title">Temps de recharge</p>
-            <p id="stats-value">26 min</p>
+            <p id="stats-value">{dataObject.totalTime}</p>
           </div>
         </div>
         <div className="stats-item">
           <p>Gain d'autonomie</p>
-          <p id="stats-value">~ 100km</p>
+          <p id="stats-value">~ {dataObject.deltaAutonomy}km</p>
         </div>
         {isFavorite ?
           <div>

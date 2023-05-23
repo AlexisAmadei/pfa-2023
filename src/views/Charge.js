@@ -44,6 +44,8 @@ export default function Charge() {
   const [autonomy, setAutonomy] = useState(0);
   const [newAutonomy, setNewAutonomy] = useState(0);
 
+  const [dataObject, setDataObject] = useState({});
+
   const handleChange = (event) => setChecked(event.target.checked);
   const handleSlider = (e) => setWantedCharge(e.target.value);
   function getNewAutonomy() { setNewAutonomy(((wantedCharge / 100) * carMaxAutonomy).toFixed(0)); }
@@ -66,9 +68,10 @@ export default function Charge() {
 
   function getNewCost() {
     const deltaKWH = ((wantedCharge - carBattery) / 100) * carMaxCapacity;
-
     setDelta(deltaKWH);
-    setCostToCharge((deltaKWH * 0.55).toFixed(2));
+    const newCostToCharge = (deltaKWH * 0.55).toFixed(2);
+    setCostToCharge(newCostToCharge);
+    setDataObject(prevDataObject => ({ ...prevDataObject, endPrice: newCostToCharge }));
   }
 
   function getNewTime() {
@@ -78,6 +81,12 @@ export default function Charge() {
     if (time < 60) timeFormat = `${time.toFixed(0)} min`;
     else timeFormat = `${(time / 60).toFixed(0)} h ${(time % 60).toFixed(0)} min`;
     setTimeToCharge(timeFormat);
+    setDataObject(prevDataObject => ({ ...prevDataObject, totalTime: timeFormat }));
+  }
+
+  function deltaAutonomy() {
+    const deltaAutonomy = newAutonomy - autonomy;
+    setDataObject(prevDataObject => ({ ...prevDataObject, deltaAutonomy: deltaAutonomy }));
   }
 
   useEffect(() => {
@@ -113,6 +122,7 @@ export default function Charge() {
     getNewAutonomy()
     getNewCost();
     getNewTime();
+    deltaAutonomy();
   }, [wantedCharge, carMaxAutonomy]);
 
   const updateCharge = async () => {
@@ -246,6 +256,7 @@ export default function Charge() {
         startPercentage={carBattery}
         endPercentage={wantedCharge}
         setSkipSummary={setSkipSummary}
+        dataObject={dataObject}
       />
     );
   } else if (!skipFeedback) {
