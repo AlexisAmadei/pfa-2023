@@ -9,8 +9,6 @@ import chargeIcon from "../assets/chargeIcon.svg";
 import '@engie-group/fluid-design-tokens/lib/css/tokens.css';
 import '@engie-group/fluid-design-system/lib/base.css';
 
-import { NJInputSearch } from '@engie-group/fluid-design-system-react';
-
 import Checkbox from '@mui/material/Checkbox';
 import CircleChecked from '@mui/icons-material/CheckCircle';
 import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
@@ -27,7 +25,7 @@ const userUID = "yiRokmNDgGAc4czw1sIQ";
 export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false);  // true skip second view state
-  const [endCharge, setEndCharge] = useState(true);        // true skip third view state
+  const [endCharge, setEndCharge] = useState(false);        // true skip third view state
   const [skipSummary, setSkipSummary] = useState(false);    // true skip fourth view state
   const [skipFeedback, setSkipFeedback] = useState(false);  // true skip fifth view state
   const [haveBorneID, setHaveBorneID] = useState(false);    // true skip first view state
@@ -64,8 +62,14 @@ export default function Charge() {
       setHaveBorneID(true);
       setBorneID(e);
       getBornePower();
+      console.log("passed");
     } else alert("Cette borne n'existe pas");
   };
+
+  const handleTextField = (e) => {
+    if (e.key === 'Enter') handleBorneID(e.target.value);
+    else return;
+  }
 
   function getNewCost() {
     const deltaKWH = ((wantedCharge - carBattery) / 100) * carMaxCapacity;
@@ -116,7 +120,7 @@ export default function Charge() {
   }, [autonomy, carBattery]);
 
   useEffect(() => {
-    if (getQR !== '') { handleBorneID(getQR); }
+    if (getQR !== '') { handleBorneID(getQR);console.log("passed"); }
   }, [getQR]);
 
   useEffect(() => {
@@ -150,7 +154,7 @@ export default function Charge() {
             style={{ marginTop:"16px", width:"100%" }}
             placeholder="Code d'authentification"
             id="search-borne-textfield"
-            onEnterKeyPress={(e) => handleBorneID(e.currentTarget.value)}
+            onChange={(e) => handleTextField(e.currentTarget.value)}
           />
         </div>
         <EngieAppBar active='charge' />

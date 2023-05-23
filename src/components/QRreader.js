@@ -11,9 +11,7 @@ const containerStyle = {
 
 const qrReaderStyle = {
   width: '272px',
-  height: '272px',
-  // borderRadius: '50%',
-  // zIndex: '999',
+  height: '272px'
 };
 
 export default function QRreader({ getReturnValue }) {
@@ -22,6 +20,7 @@ export default function QRreader({ getReturnValue }) {
   const storeBorneID = (borneID) => {
     localStorage.setItem('borneID', borneID);
   };
+
   return (
     <div style={containerStyle}>
       <QrReader
@@ -35,6 +34,7 @@ export default function QRreader({ getReturnValue }) {
         }}
         constraints={{ facingMode: 'environment' }}
         style={qrReaderStyle}
+        legacyMode={true}
       />
     </div>
   );
