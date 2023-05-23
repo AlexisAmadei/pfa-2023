@@ -14,6 +14,7 @@ import { NJInputSearch } from '@engie-group/fluid-design-system-react';
 import Checkbox from '@mui/material/Checkbox';
 import CircleChecked from '@mui/icons-material/CheckCircle';
 import CircleUnchecked from '@mui/icons-material/RadioButtonUnchecked';
+import TextField from '@mui/material/TextField';
 
 import { db } from "../config/configFirebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -145,8 +146,10 @@ export default function Charge() {
         <div>
           <p id="mid-page">ou</p>
           <p>Rentrez son code d'authentification</p>
-          <NJInputSearch
-            label="Search"
+          <TextField
+            style={{ marginTop:"16px", width:"100%" }}
+            placeholder="Code d'authentification"
+            id="search-borne-textfield"
             onEnterKeyPress={(e) => handleBorneID(e.currentTarget.value)}
           />
         </div>
