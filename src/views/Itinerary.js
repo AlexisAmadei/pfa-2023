@@ -16,6 +16,9 @@ export default function Itinerary() {
   const [carPerso, setCarPerso] = useState("");
   const [carPro, setCarPro] = useState("");
 
+  // change view
+  const [startItinerary, setStartItinerary] = useState(false);
+
   // slider values
   const [currentCharge, setCurrentCharge] = useState(0);
   const [wantedCharge, setWantedCharge] = useState(0);
@@ -126,56 +129,65 @@ export default function Itinerary() {
             }}
           />
         </div>
-        <div className="car-selection">
-          <h1>Mon véhicule</h1>
-          <div className="car-selection-card">
-            {userDoc.carPerso && (
-              <div className="car-item">
-                <img id="carIMG" height={20} src={carPerso.img} alt="car" />
-                <span id="carNAME">{userDoc.carPerso.name}</span>
-                <span id="carAUTONOMY">{carPerso.autonomy}km</span>
-                <span id="carPOWER">{carPerso.power}kw</span>
-                <span id="car-label" style={{ color: "white" }}>Perso</span>
+        {!startItinerary && (
+          <>
+            <div className="car-selection">
+              <h1>Mon véhicule</h1>
+              <div className="car-selection-card">
+                {userDoc.carPerso && (
+                  <div className="car-item">
+                    <img id="carIMG" height={20} src={carPerso.img} alt="car" />
+                    <span id="carNAME">{userDoc.carPerso.name}</span>
+                    <span id="carAUTONOMY">{carPerso.autonomy}km</span>
+                    <span id="carPOWER">{carPerso.power}kw</span>
+                    <span id="car-label" style={{ color: "white" }}>Perso</span>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-        <div className="slider-container">
-          <div className="slider-item">
-            <div className="text-label">
-              <span>Charge du véhicule avant de partir</span>
-              <span>{currentCharge}%</span>
             </div>
-            <input type="range"
-              min="0" max="100"
-              value={currentCharge}
-              onChange={(e) => handleSlider(e, "current")}
-              className="slider" id="myRange"
-              style={{
-                background: `linear-gradient(to right, #007ACD 0%, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%, #EBEEF1 100%)`
-              }}
-            />
-          </div>
-          <div className="slider-item">
-            <div className="text-label">
-              <span>Charge du véhicule à l'arrivée</span>
-              <span>{wantedCharge}%</span>
+            <div className="slider-container">
+              <div className="slider-item">
+                <div className="text-label">
+                  <span>Charge du véhicule avant de partir</span>
+                  <span>{currentCharge}%</span>
+                </div>
+                <input type="range"
+                  min="0" max="100"
+                  value={currentCharge}
+                  onChange={(e) => handleSlider(e, "current")}
+                  className="slider" id="myRange"
+                  style={{
+                    background: `linear-gradient(to right, #007ACD 0%, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%, #EBEEF1 100%)`
+                  }}
+                />
+              </div>
+              <div className="slider-item">
+                <div className="text-label">
+                  <span>Charge du véhicule à l'arrivée</span>
+                  <span>{wantedCharge}%</span>
+                </div>
+                <input type="range"
+                  min="0" max="100"
+                  value={wantedCharge}
+                  onChange={(e) => handleSlider(e, "destination")}
+                  className="slider" id="myRange"
+                  style={{
+                    background: `linear-gradient(to right, #007ACD 0%, #007ACD ${wantedCharge}%, #EBEEF1 ${wantedCharge}%, #EBEEF1 100%)`
+                  }}
+                />
+              </div>
             </div>
-            <input type="range"
-              min="0" max="100"
-              value={wantedCharge}
-              onChange={(e) => handleSlider(e, "destination")}
-              className="slider" id="myRange"
-              style={{
-                background: `linear-gradient(to right, #007ACD 0%, #007ACD ${wantedCharge}%, #EBEEF1 ${wantedCharge}%, #EBEEF1 100%)`
-              }}
-            />
-          </div>
-        </div>
-        {clickable && ( <button id="ready">Commencer l'itinéraire</button> )}
-        {!clickable && ( <button id="not-ready">Commencer l'itinéraire</button> )}
+            {clickable && (<button id="ready" onClick={() => setStartItinerary(true)}>Commencer l'itinéraire</button>)}
+            {!clickable && (<button id="not-ready">Commencer l'itinéraire</button>)}
+          </>
+        )}
+        {startItinerary && (
+          <>
+            
+          </>
+        )}
+        <EngieAppBar active="itinerary" />
       </div>
-      <EngieAppBar active="itinerary" />
     </div>
   );
 }

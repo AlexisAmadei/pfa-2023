@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 import EngieAppBar from "../components/EngieAppBar";
 import CarList from "../components/CarList";
+import "../css/Account.css"
 
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 

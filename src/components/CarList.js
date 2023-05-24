@@ -58,27 +58,31 @@ export default function CarList() {
 
   return (
     <div>
-      <div className="car-preview-container">
-        {carPerso && (
-          <div className="car-item">
-            <img id="EditIcon" src={EditIcon} alt="icon" />
-            <img id="carIMG" height={20} src={carPersoImg} alt="car image" />
-            <span id="carNAME">{carPerso}</span>
-            <span id="carAUTONOMY">{carPersoAuto}km</span>
-            <span id="carPOWER">{carPersoPower}kw</span>
-            <span id="car-label">Perso</span>
-          </div>
-        )}
-        {carPro && (
-          <div className="car-item">
-            <img id="EditIcon" src={EditIcon} alt="icon"/>
-            <img id="carIMG" height={100} src={carProImg} alt="car image" />
-            <span id="carNAME">{carPro}</span>
-            <span id="carAUTONOMY">{carProAuto}km</span>
-            <span id="carPOWER">{carProPower}kw</span>
-            <span id="car-label">Pro</span>
-          </div>
-        )}
+      <div className="card-selection-container">
+        <div className="car-selection-card">
+          {carPerso && (
+            <div className="car-item">
+              <img id="EditIcon" src={EditIcon} alt="icon" />
+              <img id="carIMG" height={20} src={carPersoImg} alt="car image" />
+              <span id="carNAME">{carPerso}</span>
+              <span id="carAUTONOMY">{carPersoAuto}km</span>
+              <span id="carPOWER">{carPersoPower}kw</span>
+              <span id="car-label">Perso</span>
+            </div>
+          )}
+        </div>
+        <div className="car-selection-card">
+          {carPro && (
+            <div className="car-item">
+              <img id="EditIcon" src={EditIcon} alt="icon" />
+              <img id="carIMG" height={20} src={carProImg} alt="car image" />
+              <span id="carNAME">{carPro}</span>
+              <span id="carAUTONOMY">{carProAuto}km</span>
+              <span id="carPOWER">{carProPower}kw</span>
+              <span id="car-label">Pro</span>
+            </div>
+          )}
+        </div>
       </div >
       <div className="add-car-container">
         <Modal />

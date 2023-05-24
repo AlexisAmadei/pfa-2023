@@ -67,7 +67,7 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Ajouter une voiture</Button>
+      <Button onClick={handleOpen}>Editez les voitures</Button>
       <Modal
         open={open}
         onClose={handleClose}
