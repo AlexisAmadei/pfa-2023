@@ -8,6 +8,11 @@ import EngieAppBar from "../components/EngieAppBar";
 import CarList from "../components/CarList";
 import "../css/Account.css"
 
+import AccountIcon from "../assets/EngieAppBar/active/account.svg";
+import ItineraryMap from "../assets/EngieAppBar/active/map.svg";
+import Money from "../assets/tirelire.svg"
+import Lock from "../assets/locker.svg"
+
 const userUID = "yiRokmNDgGAc4czw1sIQ";
 
 export default function Account() {
@@ -18,7 +23,7 @@ export default function Account() {
     const getUserData = async () => {
       const userRef = doc(db, "users", userUID);
       const userSnap = await getDoc(userRef);
-      if(userSnap.exists()) {
+      if (userSnap.exists()) {
         setFirstName(userSnap.data().firstName);
         setLastName(userSnap.data().lastName);
       } else console.error("No such document!");
@@ -46,11 +51,10 @@ export default function Account() {
       </div>
       <div className="menu-list">
         <ul>
-          <li>Informations personnelles</li>
-          <li>Itinéraire enregistrés</li>
-          <li>Charges enregistrées</li>
-          <li>Historique des paiements</li>
-          <li>Confidentialité et sécurité</li>
+          <li id="account-menu-item"><img src={AccountIcon} />Informations personnelles</li>
+          <li id="account-menu-item"><img src={ItineraryMap} />Itinéraire enregistrés</li>
+          <li id="account-menu-item"><img src={Money} />Historique des paiements</li>
+          <li id="account-menu-item"><img src={Lock} />Confidentialité et sécurité</li>
         </ul>
       </div>
       <EngieAppBar active='account' />
