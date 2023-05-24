@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="overlay">
-        <p>Please resize your browser window to view the application.</p>
+        <p>Application visible au format d'écran mobile uniquement.</p>
       </div>
       <div className="app-container">
         <Routes>
