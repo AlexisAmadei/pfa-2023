@@ -4,6 +4,8 @@ import "../css/Itinerary.css";
 import LoupeIcon from "../assets/loupeIcon.svg";
 import currentLocationIcon from "../assets/currentLocation.svg";
 import EngieAppBar from "../components/EngieAppBar";
+import PreviewMap from "../assets/Fond carte.png";
+import ItineraryIcon from "../assets/ItineraryIcon.svg";
 
 import TextField from '@mui/material/TextField';
 import { InputAdornment } from "@mui/material";
@@ -83,53 +85,52 @@ export default function Itinerary() {
     if (geolocation) setPreFillCurrent(`Lat: ${geolocation.lat}, Long: ${geolocation.lng}`);
   };
 
-  return (
-    <div>
-      <div className="itinerary-container">
-        <div className="search-container">
-          {/* <span className="add-search">+</span> */}
-          <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
-            value={preFillCurrent}
-            placeholder="Choisir un point de départ"
-            fullWidth={true}
-            sx={{
-              backgroundColor: 'white',
-              border: '1px solid black',
-              margin: '10px 0',
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <img src={LoupeIcon} alt="loupe" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <button onClick={handleEndAdornmentClick} style={{ background: 'none', border: 'none' }}>
-                    <img src={currentLocationIcon} height={22} alt="currentLocation" />
-                  </button>
-                </InputAdornment>
-              )
-            }}
-          />
-          <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
-            defaultValue={localStorage.getItem("destination")}
-            placeholder="Choisir un point d'arrivée"
-            fullWidth={true}
-            sx={{
-              backgroundColor: 'white',
-              border: '1px solid black',
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <img src={LoupeIcon} alt="loupe" />
-                </InputAdornment>
-              )
-            }}
-          />
-        </div>
-        {!startItinerary && (
+  if (!startItinerary) {
+    return (
+      <div>
+        <div className="itinerary-container">
+          <div className="search-container">
+            <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+              value={preFillCurrent}
+              placeholder="Choisir un point de départ"
+              fullWidth={true}
+              sx={{
+                backgroundColor: 'white',
+                border: '1px solid black',
+                margin: '10px 0',
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img src={LoupeIcon} alt="loupe" />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <button onClick={handleEndAdornmentClick} style={{ background: 'none', border: 'none' }}>
+                      <img src={currentLocationIcon} height={22} alt="currentLocation" />
+                    </button>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+              defaultValue={localStorage.getItem("destination")}
+              placeholder="Choisir un point d'arrivée"
+              fullWidth={true}
+              sx={{
+                backgroundColor: 'white',
+                border: '1px solid black',
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img src={LoupeIcon} alt="loupe" />
+                  </InputAdornment>
+                )
+              }}
+            />
+          </div>
           <>
             <div className="car-selection">
               <h1>Mon véhicule</h1>
@@ -180,14 +181,63 @@ export default function Itinerary() {
             {clickable && (<button id="ready" onClick={() => setStartItinerary(true)}>Commencer l'itinéraire</button>)}
             {!clickable && (<button id="not-ready">Commencer l'itinéraire</button>)}
           </>
-        )}
-        {startItinerary && (
-          <>
-            
-          </>
-        )}
+        </div>
+
         <EngieAppBar active="itinerary" />
       </div>
-    </div>
-  );
-}
+    );
+  } else {
+    return (
+      <div>
+        <div className="itinerary-container">
+          <div className="search-container">
+            <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+              value={preFillCurrent}
+              placeholder="Choisir un point de départ"
+              fullWidth={true}
+              sx={{
+                backgroundColor: 'white',
+                border: '1px solid black',
+                margin: '10px 0',
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img src={LoupeIcon} alt="loupe" />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <button onClick={handleEndAdornmentClick} style={{ background: 'none', border: 'none' }}>
+                      <img src={currentLocationIcon} height={22} alt="currentLocation" />
+                    </button>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <TextField className="address-searchBar" id="outlined-basic" variant="outlined"
+              defaultValue={localStorage.getItem("destination")}
+              placeholder="Choisir un point d'arrivée"
+              fullWidth={true}
+              sx={{
+                backgroundColor: 'white',
+                border: '1px solid black',
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img src={LoupeIcon} alt="loupe" />
+                  </InputAdornment>
+                )
+              }}
+            />
+          </div>
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
+            <img src={PreviewMap} alt="previewMap" />
+          </div>
+        </div>
+        <EngieAppBar active="itinerary" />
+      </div>
+    );
+  }
+};
