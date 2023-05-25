@@ -25,7 +25,7 @@ const userUID = "yiRokmNDgGAc4czw1sIQ";
 export default function Charge() {
   const [checked, setChecked] = useState(false);
   const [haveSettings, setHaveSettings] = useState(false);  // true skip second view state
-  const [endCharge, setEndCharge] = useState(true);        // true skip third view state
+  const [endCharge, setEndCharge] = useState(false);        // true skip third view state
   const [skipSummary, setSkipSummary] = useState(false);    // true skip fourth view state
   const [skipFeedback, setSkipFeedback] = useState(false);  // true skip fifth view state
   const [haveBorneID, setHaveBorneID] = useState(true);    // true skip first view state
@@ -105,7 +105,7 @@ export default function Charge() {
       if (carUserSnap.exists()) {
         batteryValue = carUserSnap.data().carPro.battery;
         setCarBattery(batteryValue);
-        setWantedCharge(batteryValue);
+        if (wantedCharge === 0 || wantedCharge === null) setWantedCharge(batteryValue);
         carRef = doc(db, "cars", carUserSnap.data().carPro.name);
         carSnap = await getDoc(carRef);
         if (carSnap.exists()) {
@@ -134,11 +134,27 @@ export default function Charge() {
     const docRef = doc(db, "users", userUID);
     const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
+    if (docSnap.exists() && docSnap.data().carPro.battery < wantedCharge) {
       await updateDoc(docRef, { "carPro.battery": docSnap.data().carPro.battery + 1, });
-      setCarBattery(docSnap.data().carPro.battery);
+      setCarBattery(docSnap.data().carPro.battery + 1);
+      if(docSnap.data().carPro.battery + 1 >= wantedCharge){
+        clearInterval(chargeInterval);
+        setEndCharge(true);
+      }
+    } else {
+      clearInterval(chargeInterval);
     }
   };
+  let chargeInterval;
+
+  useEffect(() => {
+    chargeInterval = setInterval(() => {
+      updateCharge();
+    }, 500);
+    return () => {
+      clearInterval(chargeInterval);
+    }
+  }, [wantedCharge]);
 
   if (!haveBorneID) {
     return (
@@ -235,7 +251,6 @@ export default function Charge() {
             radius={80}
           />
           <p id="objectif">Objectif {wantedCharge}%</p>
-          <button id="fake-charge" onClick={() => updateCharge()}>Simuler la charge</button>
         </div>
         <div className="remaining-stats">
           <div className="remaining-stats-item">
