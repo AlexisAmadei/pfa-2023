@@ -109,3 +109,22 @@ input::-webkit-slider-thumb {
 #ready:active {
     background-color: #0f6097;
 }
+
+#start-itinerary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #007ACD;
+    border: none;
+    width: 90vw;
+    padding: 12px 0px;
+    gap: 8px;
+
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #FFFFFF;
+}

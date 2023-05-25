@@ -157,7 +157,7 @@ export default function Itinerary() {
                   value={currentCharge}
                   onChange={(e) => handleSlider(e, "current")}
                   className="slider" id="myRange"
-                  style={{background: `linear-gradient(90deg, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%`}}
+                  style={{ background: `linear-gradient(90deg, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%` }}
                 />
               </div>
               <div className="slider-item">
@@ -232,6 +232,18 @@ export default function Itinerary() {
           </div>
           <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
             <img src={PreviewMap} alt="previewMap" />
+          </div>
+          <div style={{
+            position: 'absolute',
+            top: '87%',
+            left: '50%',
+            transform: 'translate(-50%,-50%)',
+            zIndex: 1,
+          }}>
+            <button id="start-itinerary" onClick={() => { window.open("https://waze.com/ul?ll=47.251266171564644,-1.4973706355821677&navigate=yes") }} >
+              <img src={ItineraryIcon} alt="itinerary" />
+              Y aller
+            </button>
           </div>
         </div>
         <EngieAppBar active="itinerary" />
