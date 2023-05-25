@@ -72,7 +72,8 @@ export default function Card() {
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-      setCardNumber(userSnap.data().cardNumber);
+      if (userSnap.data().cardNumber !== undefined && userSnap.data().cardNumber !== null)
+        setCardNumber(userSnap.data().cardNumber);
     } else console.error("User not found");
     return
   };

@@ -157,9 +157,7 @@ export default function Itinerary() {
                   value={currentCharge}
                   onChange={(e) => handleSlider(e, "current")}
                   className="slider" id="myRange"
-                  style={{
-                    background: `linear-gradient(to right, #007ACD 0%, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%, #EBEEF1 100%)`
-                  }}
+                  style={{background: `linear-gradient(90deg, #007ACD ${currentCharge}%, #EBEEF1 ${currentCharge}%`}}
                 />
               </div>
               <div className="slider-item">
