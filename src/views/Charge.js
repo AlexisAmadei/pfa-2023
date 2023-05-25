@@ -42,6 +42,8 @@ export default function Charge() {
   const [costToCharge, setCostToCharge] = useState(0);
   const [autonomy, setAutonomy] = useState(0);
   const [newAutonomy, setNewAutonomy] = useState(0);
+  const [initialCarBattery, setInitialCarBattery] = useState(0);
+  const [isCharging, setIsCharging] = useState(false);
 
   const [dataObject, setDataObject] = useState({});
 
@@ -93,6 +95,17 @@ export default function Charge() {
     const deltaAutonomy = newAutonomy - autonomy;
     setDataObject(prevDataObject => ({ ...prevDataObject, deltaAutonomy: deltaAutonomy }));
   }
+
+  useEffect(() => {
+    const getCarInfo = async () => {
+      const docRef = doc(db, "users", userUID);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setInitialCarBattery(docSnap.data().carPro.battery);
+      }
+    };
+    getCarInfo();
+  }, []);
 
   useEffect(() => {
     const getCarInfo = async () => {
@@ -148,13 +161,14 @@ export default function Charge() {
   let chargeInterval;
 
   useEffect(() => {
+    if(!isCharging) return;
     chargeInterval = setInterval(() => {
       updateCharge();
     }, 500);
     return () => {
       clearInterval(chargeInterval);
     }
-  }, [wantedCharge]);
+  }, [wantedCharge, isCharging]);
 
   if (!haveBorneID) {
     return (
@@ -230,7 +244,10 @@ export default function Charge() {
         <br></br>
         {delta > 0 ?
           <div className="start-charge">
-            <button id="ready" onClick={() => setHaveSettings(true)}>Lancez la recharge</button>
+            <button id="ready" onClick={() => {
+              setHaveSettings(true);
+              setIsCharging(true);
+            }}>Lancez la recharge</button>
           </div> :
           <div className="start-charge">
             <button id="not-ready">Lancez la recharge</button>
@@ -255,7 +272,7 @@ export default function Charge() {
         <div className="remaining-stats">
           <div className="remaining-stats-item">
             <p>Prix dépensé</p>
-            <p id="stats-value">{0}€</p>
+            <p id="stats-value">{costToCharge}€</p>
           </div>
           <div className="remaining-stats-item">
             <p>Temps restant</p>
@@ -263,11 +280,14 @@ export default function Charge() {
           </div>
           <div className="remaining-stats-item">
             <p>Gain d'autonomie</p>
-            <p id="stats-value">~ {0}km</p>
+            <p id="stats-value">~ {autonomy}km</p>
           </div>
         </div>
         <div className="stop-charge">
-          <button onClick={() => setHaveSettings(false)}>Arrêter la recharge</button>
+          <button onClick={() => {
+            setHaveSettings(false);
+            setIsCharging(false);
+          }}>Arrêter la recharge</button>
         </div>
         <EngieAppBar active='charge' />
       </div>
@@ -275,7 +295,7 @@ export default function Charge() {
   } else if (!skipSummary) {
     return (
       <Summary
-        startPercentage={carBattery}
+        startPercentage={initialCarBattery}
         endPercentage={wantedCharge}
         setSkipSummary={setSkipSummary}
         dataObject={dataObject}
