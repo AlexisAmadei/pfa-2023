@@ -28,7 +28,7 @@ export default function Charge() {
   const [endCharge, setEndCharge] = useState(false);        // true skip third view state
   const [skipSummary, setSkipSummary] = useState(false);    // true skip fourth view state
   const [skipFeedback, setSkipFeedback] = useState(false);  // true skip fifth view state
-  const [haveBorneID, setHaveBorneID] = useState(true);    // true skip first view state
+  const [haveBorneID, setHaveBorneID] = useState(false);    // true skip first view state
 
   const [borneID, setBorneID] = useState("");
   const [bornePower, setBornePower] = useState(50);
@@ -271,11 +271,11 @@ export default function Charge() {
         </div>
         <div className="remaining-stats">
           <div className="remaining-stats-item">
-            <p>Prix dépensé</p>
+            <p>Prix total</p>
             <p id="stats-value">{costToCharge}€</p>
           </div>
           <div className="remaining-stats-item">
-            <p>Temps restant</p>
+            <p>Temps total</p>
             <p id="stats-value">{timeToCharge}</p>
           </div>
           <div className="remaining-stats-item">

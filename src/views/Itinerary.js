@@ -6,6 +6,7 @@ import currentLocationIcon from "../assets/currentLocation.svg";
 import EngieAppBar from "../components/EngieAppBar";
 import PreviewMap from "../assets/Fond carte.png";
 import ItineraryIcon from "../assets/ItineraryIcon.svg";
+import fakePreview from "../assets/previewItinerary.png";
 
 import TextField from '@mui/material/TextField';
 import { InputAdornment } from "@mui/material";
@@ -233,12 +234,19 @@ export default function Itinerary() {
           <div >
             <img src={PreviewMap} width={"100%"} alt="previewMap" />
           </div>
+          <img src={fakePreview} alt="fake preview itinerary"></img>
+          <div className="fake-blank"
+            style={{
+              height: '150px',
+            }}
+          ></div>
           <div style={{
-            position: 'absolute',
+            position: 'fixed',
             top: '87%',
             left: '50%',
             transform: 'translate(-50%,-50%)',
             zIndex: 1,
+            overflow: 'auto',
           }}>
             <button id="start-itinerary" onClick={() => { window.open("https://waze.com/ul?ll=47.251266171564644,-1.4973706355821677&navigate=yes") }} >
               <img src={ItineraryIcon} alt="itinerary" />
